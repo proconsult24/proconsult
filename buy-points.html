@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inverra - شراء النقاط الاستشارية</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* الألوان الرئيسية */
+            --primary: #4361ee;
+            --primary-light: #e6e9ff;
+            --primary-dark: #3a0ca3;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --success: #38b000;
+            --warning: #ff9e00;
+            --danger: #ef233c;
+            --gold: #FFD700;
+            --silver: #C0C0C0;
+            --bronze: #CD7F32;
+            
+            /* ألوان النص */
+            --text-dark: #212529;
+            --text-gray: #6c757d;
+            --text-light: #f8f9fa;
+            
+            /* الظلال */
+            --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.15);
+            --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.2);
+            
+            /* الانتقالات */
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* الزوايا */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-full: 9999px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f8fafc;
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* التنسيق العام */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        /* شريط التنقل العلوي */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background-color: white;
+            box-shadow: var(--shadow-sm);
+            padding: 1rem 0;
+            height: 70px;
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+        
+        .navbar-brand img {
+            width: 35px;
+            height: 35px;
+            margin-left: 0.75rem;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-light);
+        }
+        
+        /* الشريط الجانبي */
+        .sidebar {
+            position: fixed;
+            top: 70px;
+            right: 0;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: white;
+            box-shadow: var(--shadow-sm);
+            padding: 1.5rem;
+            transition: var(--transition-normal);
+            z-index: 90;
+            overflow-y: auto;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--text-gray);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+            font-size: 0.95rem;
+        }
+        
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+        
+        .sidebar-menu a i {
+            margin-left: 0.75rem;
+            width: 20px;
+            text-align: center;
+            font-size: 1rem;
+        }
+        
+        .sidebar-footer {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            left: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+        
+        /* المحتوى الرئيسي */
+        .main-content {
+            margin-right: 280px;
+            margin-top: 70px;
+            padding: 2rem;
+            transition: var(--transition-normal);
+        }
+        
+        /* بطاقات المعلومات */
+        .info-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.5rem;
+            transition: var(--transition-normal);
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .info-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .info-card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+        
+        /* بطاقات العروض */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
+            position: relative;
+            border: 1px solid #eee;
+            cursor: pointer;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .pricing-card.selected {
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.2);
+        }
+        
+        .pricing-card.popular {
+            border: 2px solid var(--primary);
+        }
+        
+        .pricing-card.popular::before {
+            content: "الأكثر شعبية";
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        .pricing-card-header {
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card.gold .pricing-card-header {
+            background: linear-gradient(135deg, #FFD700, #FFC200);
+        }
+        
+        .pricing-card.silver .pricing-card-header {
+            background: linear-gradient(135deg, #C0C0C0, #A8A8A8);
+        }
+        
+        .pricing-card.bronze .pricing-card-header {
+            background: linear-gradient(135deg, #CD7F32, #B87333);
+        }
+        
+        .pricing-card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .pricing-card-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .pricing-card-period {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.8);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .pricing-card-body {
+            padding: 1.5rem;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        
+        .pricing-features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pricing-features li i {
+            margin-left: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .pricing-card-footer {
+            padding: 0 1.5rem 1.5rem;
+            text-align: center;
+        }
+        
+        /* ملخص الطلب */
+        .order-summary {
+            background: #f9f9f9;
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+        
+        .order-summary.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .order-summary-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        .order-summary-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .order-summary-total {
+            font-weight: 700;
+            border-top: 1px solid #eee;
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* طرق الدفع */
+        .payment-section {
+            display: none;
+        }
+        
+        .payment-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .payment-method {
+            flex: 1;
+            min-width: 120px;
+            border: 1px solid #eee;
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-xs);
+        }
+        
+        .payment-method.active {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+        
+        .payment-method img {
+            height: 30px;
+            object-fit: contain;
+            margin-bottom: 0.5rem;
+        }
+        
+        .payment-method-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        /* نماذج الدفع */
+        .payment-form {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #f9f9f9;
+            border-radius: var(--radius-md);
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-md);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -0.5rem;
+        }
+        
+        .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+            padding: 0 0.5rem;
+        }
+        
+        /* الأزرار */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: var(--transition-normal);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary-light);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+        }
+        
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+        
+        /* التنبيهات */
+        .alert {
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .alert-success {
+            background-color: rgba(56, 176, 0, 0.1);
+            color: var(--success);
+        }
+        
+        .alert-warning {
+            background-color: rgba(255, 158, 0, 0.1);
+            color: var(--warning);
+        }
+        
+        .alert-danger {
+            background-color: rgba(239, 35, 60, 0.1);
+            color: var(--danger);
+        }
+        
+        .alert i {
+            margin-left: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        /* الأسئلة الشائعة */
+        .accordion {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        
+        .accordion-item {
+            border-bottom: 1px solid #eee;
+        }
+        
+        .accordion-header {
+            background: #f9f9f9;
+        }
+        
+        .accordion-button {
+            width: 100%;
+            padding: 1rem;
+            text-align: right;
+            background: none;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .accordion-button:after {
+            content: "\f078";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            transition: var(--transition-normal);
+        }
+        
+        .accordion-button.collapsed:after {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-body {
+            padding: 1rem;
+            background: white;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        
+        /* العلامات */
+        .badge {
+            display: inline-block;
+            padding: 0.35rem 0.65rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .bg-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .bg-success {
+            background-color: rgba(56, 176, 0, 0.1);
+            color: var(--success);
+        }
+        
+        .bg-warning {
+            background-color: rgba(255, 158, 0, 0.1);
+            color: var(--warning);
+        }
+        
+        .text-primary { color: var(--primary); }
+        .text-success { color: var(--success); }
+        .text-muted { color: var(--text-gray); }
+        
+        /* زر القائمة للهاتف */
+        .navbar-toggler {
+            display: none;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            background-color: var(--primary-light);
+            border: none;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .navbar-toggler span {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background-color: var(--primary);
+            border-radius: 2px;
+            transition: var(--transition-normal);
+        }
+        
+        .navbar-toggler span:nth-child(1) {
+            top: 12px;
+        }
+        
+        .navbar-toggler span:nth-child(2) {
+            top: 18px;
+        }
+        
+        .navbar-toggler span:nth-child(3) {
+            top: 24px;
+        }
+        
+        .navbar-toggler.active span:nth-child(1) {
+            top: 18px;
+            transform: translateX(-50%) rotate(45deg);
+        }
+        
+        .navbar-toggler.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .navbar-toggler.active span:nth-child(3) {
+            top: 18px;
+            transform: translateX(-50%) rotate(-45deg);
+        }
+        
+        /* طبقة التعتيم */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 80;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-normal);
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* وسائط الاستعلام للشاشات المتوسطة (أقل من 1200px) */
+        @media (max-width: 1199.98px) {
+            .sidebar {
+                width: 240px;
+                padding: 1.25rem;
+            }
+            
+            .main-content {
+                margin-right: 240px;
+            }
+        }
+        
+        /* وسائط الاستعلام للشاشات الصغيرة (أقل من 992px) */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                transform: translateX(100%);
+                width: 280px;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-right: 0;
+                padding: 1.25rem;
+            }
+            
+            .navbar-toggler {
+                display: block;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* وسائط الاستعلام للهواتف (أقل من 768px) */
+        @media (max-width: 767.98px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .pricing-card {
+                max-width: 350px;
+                margin: 0 auto;
+            }
+            
+            .payment-methods {
+                justify-content: center;
+            }
+            
+            .payment-method {
+                flex: 0 0 calc(50% - 0.5rem);
+            }
+            
+            .col-md-6 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+        
+        /* وسائط الاستعلام للهواتف الصغيرة (أقل من 576px) */
+        @media (max-width: 575.98px) {
+            .navbar-brand {
+                font-size: 1.1rem;
+            }
+            
+            .navbar-brand img {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .user-avatar {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .pricing-card-price {
+                font-size: 2rem;
+            }
+            
+            .payment-method {
+                flex: 0 0 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل العلوي -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-container">
+                <button class="navbar-toggler">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <a href="#" class="navbar-brand">
+                    <img src="https://www2.0zz0.com/2025/05/19/00/684514557.png" alt="ProConsult">
+                </a>
+                
+                <div class="user-menu">
+                    <div class="dropdown">
+                        <img src="assets/images/user-avatar.jpg" alt="صورة المستخدم" class="user-avatar">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- الشريط الجانبي -->
+    <aside class="sidebar">
+        <div class="user-info text-center mb-4">
+            <img src="assets/images/user-avatar.jpg" alt="صورة المستخدم" class="user-avatar mb-2" style="width: 70px; height: 70px;">
+            <h4>أحمد محمد</h4>
+            <p class="text-muted">مستثمر</p>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="#"><i class="fas fa-home"></i> نظرة عامة</a></li>
+            <li><a href="#"><i class="fas fa-chart-line"></i> محفظتي</a></li>
+            <li><a href="#"><i class="fas fa-lightbulb"></i> الفرص الاستثمارية</a></li>
+            <li><a href="#"><i class="fas fa-bell"></i> التنبيهات</a></li>
+            <li><a href="#" class="active"><i class="fas fa-coins"></i> النقاط الاستشارية</a></li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <a href="#" class="btn btn-primary btn-block">
+                <i class="fas fa-headset"></i> الدعم الفني
+            </a>
+        </div>
+    </aside>
+    
+    <!-- طبقة التعتيم -->
+    <div class="overlay"></div>
+    
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+        <div class="container">
+            <!-- عنوان الصفحة -->
+            <div class="info-card text-center">
+                <h1 class="info-card-title mb-2">شراء النقاط الاستشارية</h1>
+                <p class="text-muted">احصل على نقاط استشارية لاستخدامها في الحصول على استشارات خبرائنا المتميزين</p>
+            </div>
+            
+            <!-- عرض خاص -->
+            <div class="info-card bg-primary-light border-primary" style="border: 2px solid var(--primary);">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h3 class="text-primary mb-1">عرض خاص لمدة محدودة!</h3>
+                        <p class="text-muted">احصل على نقاط إضافية عند شرائك أي باقة اليوم</p>
+                    </div>
+                    <div class="badge bg-primary">عرض محدود</div>
+                </div>
+            </div>
+            
+            <!-- باقات النقاط -->
+            <div class="info-card">
+                <div class="info-card-header">
+                    <h3 class="info-card-title">اختر الباقة المناسبة لك</h3>
+                    <div class="badge bg-success">+20% نقاط إضافية اليوم</div>
+                </div>
+                
+                <div class="pricing-grid">
+                    <!-- الباقة البرونزية -->
+                    <div class="pricing-card bronze" data-package="bronze" data-price="1500" data-points="120">
+                        <div class="pricing-card-header">
+                            <h3 class="pricing-card-title">الباقة البرونزية</h3>
+                            <div class="pricing-card-price">1,500 د.ج </div>
+                            <div class="pricing-card-period">لـ 100 نقطة استشارية</div>
+                        </div>
+                        <div class="pricing-card-body">
+                            <ul class="pricing-features">
+                                <li><i class="fas fa-check"></i> 100 نقطة استشارية</li>
+                                <li><i class="fas fa-check"></i> +20 نقطة إضافية (عرض خاص)</li>
+                                <li><i class="fas fa-check"></i> استشارة واحدة مع خبير</li>
+                                <li><i class="fas fa-check"></i> تقرير استثماري أولي</li>
+                                <li><i class="fas fa-check"></i> صلاحية سنة كاملة</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-card-footer">
+                            <button class="btn btn-outline btn-block select-package">اختر هذه الباقة</button>
+                        </div>
+                    </div>
+                    
+                    <!-- الباقة الفضية (الأكثر شعبية) -->
+                    <div class="pricing-card silver popular" data-package="silver" data-price="3500" data-points="300">
+                        <div class="pricing-card-header">
+                            <h3 class="pricing-card-title">الباقة الفضية</h3>
+                            <div class="pricing-card-price">  3,500 د.ج </div>
+                            <div class="pricing-card-period">لـ 250 نقطة استشارية</div>
+                        </div>
+                        <div class="pricing-card-body">
+                            <ul class="pricing-features">
+                                <li><i class="fas fa-check"></i> 250 نقطة استشارية</li>
+                                <li><i class="fas fa-check"></i> +50 نقطة إضافية (عرض خاص)</li>
+                                <li><i class="fas fa-check"></i> 3 استشارات مع خبراء</li>
+                                <li><i class="fas fa-check"></i> تقرير استثماري مفصل</li>
+                                <li><i class="fas fa-check"></i> متابعة لمدة 3 أشهر</li>
+                                <li><i class="fas fa-check"></i> صلاحية سنة كاملة</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-card-footer">
+                            <button class="btn btn-outline btn-block select-package">اختر هذه الباقة</button>
+                        </div>
+                    </div>
+                    
+                    <!-- الباقة الذهبية -->
+                    <div class="pricing-card gold" data-package="gold" data-price="6000" data-points="600">
+                        <div class="pricing-card-header">
+                            <h3 class="pricing-card-title">الباقة الذهبية</h3>
+                            <div class="pricing-card-price">6,000 د.ج </div>
+                            <div class="pricing-card-period">لـ 500 نقطة استشارية</div>
+                        </div>
+                        <div class="pricing-card-body">
+                            <ul class="pricing-features">
+                                <li><i class="fas fa-check"></i> 500 نقطة استشارية</li>
+                                <li><i class="fas fa-check"></i> +100 نقطة إضافية (عرض خاص)</li>
+                                <li><i class="fas fa-check"></i> 6 استشارات مع خبراء</li>
+                                <li><i class="fas fa-check"></i> تقرير استثماري شامل</li>
+                                <li><i class="fas fa-check"></i> متابعة لمدة 6 أشهر</li>
+                                <li><i class="fas fa-check"></i> أولوية في الرد على الاستفسارات</li>
+                                <li><i class="fas fa-check"></i> صلاحية سنتين كاملتين</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-card-footer">
+                            <button class="btn btn-outline btn-block select-package">اختر هذه الباقة</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ملخص الطلب (يظهر بعد اختيار الباقة) -->
+            <div class="order-summary" id="orderSummary">
+                <h3 class="order-summary-title">ملخص طلبك</h3>
+                <div class="order-summary-details">
+                    <span>الباقة المختارة:</span>
+                    <span id="selectedPackageName">-</span>
+                </div>
+                <div class="order-summary-details">
+                    <span>عدد النقاط:</span>
+                    <span id="selectedPoints">-</span>
+                </div>
+                <div class="order-summary-details">
+                    <span>السعر:</span>
+                    <span id="selectedPrice">- ر.س</span>
+                </div>
+                <div class="order-summary-details order-summary-total">
+                    <span>المبلغ الإجمالي:</span>
+                    <span id="totalPrice">- ر.س</span>
+                </div>
+            </div>
+            
+            <!-- طرق الدفع (تظهر بعد اختيار الباقة) -->
+            <div class="info-card" id="paymentMethodsCard" style="display: none;">
+                <div class="info-card-header">
+                    <h3 class="info-card-title">اختر طريقة الدفع</h3>
+                </div>
+                
+                <div class="payment-methods">
+                    <!-- بنك الجزائر -->
+                    <div class="payment-method" data-payment="algeria-bank">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Logo_of_the_Bank_of_Algeria.png/500px-Logo_of_the_Bank_of_Algeria.png" alt="بنك الجزائر">
+                        <div class="payment-method-name">بنك الجزائر</div>
+                    </div>
+                    
+                    <!-- PayPal -->
+                    <div class="payment-method" data-payment="paypal">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1200px-PayPal.svg.png" alt="PayPal">
+                        <div class="payment-method-name">PayPal</div>
+                    </div>
+                    
+                    <!-- Visa -->
+                    <div class="payment-method" data-payment="credit-card">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/1200px-Visa_Inc._logo.svg.png" alt="Visa">
+                        <div class="payment-method-name">Visa</div>
+                    </div>
+                    
+                    <!-- Mastercard -->
+                    <div class="payment-method" data-payment="credit-card">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1200px-Mastercard-logo.svg.png" alt="Mastercard">
+                        <div class="payment-method-name">Mastercard</div>
+                    </div>
+                    
+                    <!-- Western Union -->
+                    <div class="payment-method" data-payment="western-union">
+                        <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/f/f1/Banque_du_Golf_Alg%C3%A9rie.svg/langfr-195px-Banque_du_Golf_Alg%C3%A9rie.svg.png" alt=" بنك الخليج">
+                        <div class="payment-method-name">بنك الحليج</div>
+                    </div>
+                    
+                    <!-- Bitcoin -->
+                    <div class="payment-method" data-payment="crypto">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png" alt="Bitcoin">
+                        <div class="payment-method-name">Bitcoin</div>
+                    </div>
+                </div>
+                
+                <!-- تفاصيل الدفع - بنك الجزائر -->
+                <div class="payment-section" id="algeria-bank-payment">
+                    <div class="payment-form">
+                        <h4 class="mb-3">الدفع عبر بنك الجزائر</h4>
+                        
+                        <div class="alert alert-warning">
+                            <i class="fas fa-info-circle"></i>
+                            <span>سيتم توجيهك إلى بوابة الدفع الآمنة لبنك الجزائر لإتمام عملية الدفع</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="algeria-bank-account" class="form-label">رقم الحساب البنكي</label>
+                            <input type="text" class="form-control" id="algeria-bank-account" placeholder="ادخل رقم الحساب البنكي">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="algeria-bank-phone" class="form-label">رقم الهاتف المسجل</label>
+                            <input type="tel" class="form-control" id="algeria-bank-phone" placeholder="ادخل رقم الهاتف المسجل في البنك">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block btn-lg mt-3 confirm-payment">
+                            <i class="fas fa-lock"></i> الانتقال إلى بوابة الدفع
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- تفاصيل الدفع - PayPal -->
+                <div class="payment-section" id="paypal-payment">
+                    <div class="payment-form">
+                        <h4 class="mb-3">الدفع عبر PayPal</h4>
+                        
+                        <div class="alert alert-warning">
+                            <i class="fas fa-info-circle"></i>
+                            <span>سيتم توجيهك إلى موقع PayPal لإتمام عملية الدفع</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="paypal-email" class="form-label">بريد PayPal الإلكتروني</label>
+                            <input type="email" class="form-control" id="paypal-email" placeholder="ادخل بريدك الإلكتروني لـ PayPal">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block btn-lg mt-3 confirm-payment" style="background-color: #003087;">
+                            <i class="fab fa-paypal"></i> الدفع عبر PayPal
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- تفاصيل الدفع - بطاقات الائتمان -->
+                <div class="payment-section" id="credit-card-payment">
+                    <div class="payment-form">
+                        <h4 class="mb-3">الدفع ببطاقة الائتمان</h4>
+                        
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>الدفع الآمن عبر بوابة الدفع الإلكتروني. لن يتم تخزين أي معلومات دفع لدينا.</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cardNumber" class="form-label">رقم البطاقة</label>
+                            <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456">
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="expiryDate" class="form-label">تاريخ الانتهاء</label>
+                                    <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="cvv" class="form-label">CVV</label>
+                                    <input type="text" class="form-control" id="cvv" placeholder="123">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cardName" class="form-label">اسم حامل البطاقة</label>
+                            <input type="text" class="form-control" id="cardName" placeholder="كما هو مدون على البطاقة">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block btn-lg mt-3 confirm-payment">
+                            <i class="fas fa-lock"></i> تأكيد الدفع
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- تفاصيل الدفع - Western Union -->
+                <div class="payment-section" id="western-union-payment">
+                    <div class="payment-form">
+                        <h4 class="mb-3">الدفع عبر Western Union</h4>
+                        
+                        <div class="alert alert-warning">
+                            <i class="fas fa-info-circle"></i>
+                            <span>برجاء استخدام المعلومات التالية لإرسال المبلغ عبر بنك الخليج </span>
+                        </div>
+                        
+                        <div class="info-card bg-primary-light">
+                            <h5 class="text-primary mb-2">معلومات المستلم:</h5>
+                            <p><strong>الاسم:</strong>procou</p>
+                            <p><strong>البلد:</strong> الجزائر</p>
+                            <p><strong>المدينة:</strong>قالمة </p>
+                            <p><strong>رقم الهاتف:</strong> +213 552 XXX XXX</p>
+                        </div>
+                        
+                        <div class="form-group mt-3">
+                            <label for="wu-control-number" class="form-label">رقم التحكم (MTCN)</label>
+                            <input type="text" class="form-control" id="wu-control-number" placeholder="ادخل رقم التحكم بعد الإرسال">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block btn-lg mt-3 confirm-payment" style="background-color: #6E2B62;">
+                            <i class="fas fa-check-circle"></i> تأكيد الإرسال
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- تفاصيل الدفع - Bitcoin -->
+                <div class="payment-section" id="crypto-payment">
+                    <div class="payment-form">
+                        <h4 class="mb-3">الدفع بالعملات الرقمية</h4>
+                        
+                        <div class="alert alert-warning">
+                            <i class="fas fa-info-circle"></i>
+                            <span>برجاء إرسال المبلغ إلى المحفظة الرقمية التالية</span>
+                        </div>
+                        
+                        <div class="info-card bg-primary-light">
+                            <h5 class="text-primary mb-2">معلومات المحفظة:</h5>
+                            <p><strong>نوع العملة:</strong> Bitcoin (BTC)</p>
+                            <p><strong>عنوان المحفظة:</strong> <span id="btc-address">1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</span></p>
+                            <button class="btn btn-sm btn-outline mt-2" onclick="copyBtcAddress()">
+                                <i class="fas fa-copy"></i> نسخ العنوان
+                            </button>
+                        </div>
+                        
+                        <div class="form-group mt-3">
+                            <label for="crypto-tx-id" class="form-label">معرف المعاملة (TX ID)</label>
+                            <input type="text" class="form-control" id="crypto-tx-id" placeholder="ادخل معرف المعاملة بعد الإرسال">
+                        </div>
+                        
+                        <div class="alert alert-warning mt-3">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>قد تستغرق المعاملات الرقمية من 10-30 دقيقة للتأكيد على الشبكة</span>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block btn-lg mt-3 confirm-payment" style="background-color: #F7931A;">
+                            <i class="fab fa-bitcoin"></i> تأكيد الإرسال
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- الأسئلة الشائعة -->
+            <div class="info-card">
+                <div class="info-card-header">
+                    <h3 class="info-card-title">الأسئلة الشائعة</h3>
+                </div>
+                
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h4 class="accordion-header">
+                            <button class="accordion-button">
+                                ما هي النقاط الاستشارية؟
+                            </button>
+                        </h4>
+                        <div class="accordion-body">
+                            النقاط الاستشارية هي عملة رقمية تستخدم داخل منصة ProConsult للحصول على استشارات من خبرائنا في مختلف المجالات الاستثمارية. كل استشارة تحتاج إلى عدد معين من النقاط حسب نوع الخبير ومدة الجلسة.
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h4 class="accordion-header">
+                            <button class="accordion-button collapsed">
+                                كم تبلغ صلاحية النقاط الاستشارية؟
+                            </button>
+                        </h4>
+                        <div class="accordion-body">
+                            النقاط الاستشارية لها صلاحية تختلف حسب الباقة التي تشتريها. الباقة البرونزية والفضية صلاحيتها سنة واحدة من تاريخ الشراء، بينما الباقة الذهبية صلاحيتها سنتين كاملتين.
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h4 class="accordion-header">
+                            <button class="accordion-button collapsed">
+                                هل يمكنني استرداد النقاط غير المستخدمة؟
+                            </button>
+                        </h4>
+                        <div class="accordion-body">
+                            نعم، يمكنك استرداد النقاط غير المستخدمة بنسبة 70% من قيمتها إذا لم تكن قد استخدمت أي منها خلال فترة الصلاحية. يرجى التواصل مع الدعم الفني لمعالجة طلب الاسترداد.
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h4 class="accordion-header">
+                            <button class="accordion-button collapsed">
+                                كيف يمكنني استخدام النقاط الاستشارية؟
+                            </button>
+                        </h4>
+                        <div class="accordion-body">
+                            بعد شراء النقاط، يمكنك حجز جلسة استشارية مع أي خبير متاح على المنصة. سيتم خصم النقاط تلقائيًا عند تأكيد الحجز. يمكنك أيضًا استخدام النقاط لطلب تقارير استثمارية مخصصة.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // التحكم في الشريط الجانبي للهاتف
+            const navbarToggler = document.querySelector('.navbar-toggler');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+            
+            navbarToggler.addEventListener('click', function() {
+                this.classList.toggle('active');
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+            
+            overlay.addEventListener('click', function() {
+                navbarToggler.classList.remove('active');
+                sidebar.classList.remove('active');
+                this.classList.remove('active');
+            });
+            
+            // اختيار الباقة
+            let selectedPackage = null;
+            const packageButtons = document.querySelectorAll('.select-package');
+            const orderSummary = document.getElementById('orderSummary');
+            const paymentMethodsCard = document.getElementById('paymentMethodsCard');
+            
+            packageButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const card = this.closest('.pricing-card');
+                    const packageName = card.querySelector('.pricing-card-title').textContent;
+                    const packagePrice = card.getAttribute('data-price');
+                    const packagePoints = card.getAttribute('data-points');
+                    
+                    // تخزين البيانات المختارة
+                    selectedPackage = {
+                        name: packageName,
+                        price: packagePrice,
+                        points: packagePoints
+                    };
+                    
+                    // تحديث ملخص الطلب
+                    document.getElementById('selectedPackageName').textContent = packageName;
+                    document.getElementById('selectedPoints').textContent = packagePoints + ' نقطة';
+                    document.getElementById('selectedPrice').textContent = packagePrice + 'د.ج ';
+                    document.getElementById('totalPrice').textContent = packagePrice + 'د.ج  ';
+                    
+                    // إظهار ملخص الطلب
+                    orderSummary.classList.add('active');
+                    
+                    // إظهار قسم طرق الدفع
+                    paymentMethodsCard.style.display = 'block';
+                    
+                    // إخفاء جميع أقسام الدفع
+                    document.querySelectorAll('.payment-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // إزالة التنشيط من جميع طرق الدفع
+                    document.querySelectorAll('.payment-method').forEach(method => {
+                        method.classList.remove('active');
+                    });
+                    
+                    // إزالة التنشيط من جميع الباقات
+                    document.querySelectorAll('.pricing-card').forEach(pCard => {
+                        pCard.classList.remove('selected');
+                    });
+                    
+                    // تنشيط الباقة المختارة
+                    card.classList.add('selected');
+                    
+                    // تغيير نص الزر في الباقة المختارة
+                    this.classList.remove('btn-outline');
+                    this.classList.add('btn-primary');
+                    this.textContent = 'تم الاختيار';
+                    
+                    // تمرير إلى أعلى قسم الدفع
+                    paymentMethodsCard.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // اختيار طريقة الدفع
+            const paymentMethods = document.querySelectorAll('.payment-method');
+            paymentMethods.forEach(method => {
+                method.addEventListener('click', function() {
+                    // إزالة التنشيط من جميع طرق الدفع
+                    paymentMethods.forEach(m => {
+                        m.classList.remove('active');
+                    });
+                    
+                    // تنشيط طريقة الدفع المختارة
+                    this.classList.add('active');
+                    
+                    // إخفاء جميع أشكال الدفع
+                    document.querySelectorAll('.payment-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // إظهار شكل الدفع المختار
+                    const paymentType = this.getAttribute('data-payment');
+                    document.getElementById(`${paymentType}-payment`).classList.add('active');
+                });
+            });
+            
+            // تأكيد الدفع
+            const confirmButtons = document.querySelectorAll('.confirm-payment');
+            confirmButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    if (!selectedPackage) {
+                        alert('الرجاء اختيار باقة أولاً');
+                        return;
+                    }
+                    
+                    const paymentMethod = document.querySelector('.payment-method.active');
+                    if (!paymentMethod) {
+                        alert('الرجاء اختيار طريقة دفع');
+                        return;
+                    }
+                    
+                    // يمكنك هنا إضافة منطق إرسال البيانات إلى الخادم
+                    alert(`شكراً لك! تم تأكيد طلبك لشراء ${selectedPackage.points} نقطة بمبلغ ${selectedPackage.price} ر.س`);
+                });
+            });
+            
+            // تبسيط الأكورديون
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.toggle('collapsed');
+                    const body = this.nextElementSibling;
+                    body.style.display = body.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+        });
+        
+        // نسخ عنوان Bitcoin
+        function copyBtcAddress() {
+            const btcAddress = document.getElementById('btc-address').textContent;
+            navigator.clipboard.writeText(btcAddress).then(() => {
+                alert('تم نسخ عنوان المحفظة بنجاح: ' + btcAddress);
+            });
+        }
+    </script>
+    <script type="module" src="js/auth-check.js"></script>
+</body>
+</html>

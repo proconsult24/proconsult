@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فريقنا - Inverra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #e6e9ff;
+            --primary-dark: #3a0ca3;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+            
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f5f7ff;
+            color: #333;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        .team-hero {
+            background: var(--gradient);
+            color: white;
+            padding: 6rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1571260898933-5f6f683aa1c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
+            opacity: 0.15;
+            z-index: 0;
+        }
+        
+        .team-hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .team-hero h1 {
+            font-size: 2.75rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .team-hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 100%;
+            padding: 3rem 1.5rem;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .team-horizontal-scroll {
+            display: flex;
+            gap: 2rem;
+            padding-bottom: 1rem;
+            scroll-snap-type: x mandatory;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            will-change: transform;
+        }
+        
+        .team-card {
+            flex: 0 0 auto;
+            width: 300px;
+            scroll-snap-align: start;
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .team-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .team-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .team-card:hover .team-image img {
+            transform: scale(1.05);
+        }
+        
+        .team-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .team-position {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .team-name {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .team-bio {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+        
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+        
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .social-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* إخفاء شريط التمرير في بعض المتصفحات */
+        .team-horizontal-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .team-horizontal-scroll::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 4px;
+        }
+        
+        .team-horizontal-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        @media (min-width: 768px) {
+            .team-card {
+                width: 350px;
+            }
+            
+            .team-image {
+                height: 250px;
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .team-horizontal-scroll {
+                justify-content: center;
+                flex-wrap: wrap;
+                overflow-x: visible;
+                padding-bottom: 0;
+            }
+            
+            .team-card {
+                width: calc(25% - 2rem);
+                min-width: 250px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .team-card {
+                width: 280px;
+            margin-bottom: 0;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0,0,0,0.05);
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+            
+            .team-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .team-hero p {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* أنيميشن التمرير التلقائي */
+        @keyframes autoScroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-100% + 100vw));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .team-horizontal-scroll {
+                animation: autoScroll 15s linear infinite;
+                padding-right: 100%;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            
+            .team-horizontal-scroll:hover {
+                animation-play-state: paused;
+            }
+            
+            .team-horizontal-scroll::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .team-card {
+                will-change: transform;
+                backface-visibility: hidden;
+                transform: translateZ(0);
+            }
+        }
+        
+        /* مؤشر التمرير */
+        .scroll-indicator {
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--primary);
+            font-size: 0.9rem;
+            display: none;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(0);
+            }
+            40% {
+                transform: translateX(-10px);
+            }
+            60% {
+                transform: translateX(-5px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .scroll-indicator {
+                display: block;
+            }
+        }
+        
+        /* تحسينات للأداء */
+        .team-image {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- قسم البطل -->
+    <section class="team-hero animate__animated animate__fadeIn">
+        <div class="team-hero-content">
+            <h1 class="animate__animated animate__fadeInDown">فريق ProConsult</h1>
+            <p class="animate__animated animate__fadeInDown animate__delay-1s">الخبراء المبدعون الذين يجعلون رؤيتنا حقيقة</p>
+        </div>
+    </section>
+    
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <div class="team-horizontal-scroll">
+            <!-- العضو 1 -->
+            <div class="team-card animate__animated animate__fadeInRight" data-wow-delay="0.1s">
+                <div class="team-image">
+                    <img src="https://img.freepik.com/vecteurs-premium/icone-feminine-vecteur-libre_636116-30.jpg?ga=GA1.1.2116059815.1747002610&semt=ais_hybrid&w=740" alt="أحمد محمد" loading="lazy">
+                </div>
+                <div class="team-content">
+                    <span class="team-position"> الأستاذة المؤطرة </span>
+                    <h3 class="team-name">الدكتورة ايمان بوشارب </h3>
+                    <p class="team-bio">محامية متخصصة في القانون، تتمتع بخبرة تربوية تزيد عن 13 عامًا في مجال التعليم، إلى جانب أكثر من عقد من الزمن في الممارسة المهنية الفعلية لمهنة المحاماة منذ عام 2010.وتُعرف بقدرتها المتميزة على تطوير المحتوى الأكاديمي ومواءمته مع المعايير القانونية المعتمدة. تجمع بين الكفاءة القانونية والتمكن الأكاديمي، مما يجعلها مرجعًا موثوقًا في تحسين جودة التعليم ضمن الإطار القانوني</p>
+                    <div class="team-social">
+                        <a href="#" class="social-link" aria-label="تويتر"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="لينكدإن"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link" aria-label="جيت هاب"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link" aria-label="بريد إلكتروني"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- العضو 2 -->
+            <div class="team-card animate__animated animate__fadeInRight" data-wow-delay="0.2s">
+                <div class="team-image">
+                    <img src="https://img.freepik.com/vecteurs-premium/icone-profil-personnes_24877-40756.jpg?ga=GA1.1.2116059815.1747002610&semt=ais_hybrid&w=740" alt="سارة أحمد" loading="lazy">
+                </div>
+                <div class="team-content">
+                    <span class="team-position">المؤسسةوالرائدة الفكرية ل ProConsult</span>
+                    <h3 class="team-name"> رانية شكورة</h3>
+                    <p class="team-bio">طالبة متميزة تحمل شغفًا بريادة الأعمال والتقنية، وصاحبة فكرة مشروع ProConsult، وهي منصة تهدف إلى تعزيز التواصل بين المستثمرين والشركات الناشئة، وتقريب وجهات النظر بين الطرفين. تسعى من خلال المشروع إلى توفير بيئة استشارية احترافية تسهم في تسريع نمو المشاريع الريادية، من خلال تقديم حلول استراتيجية تدعم اتخاذ القرار وتحقق القيمة للطرفين</p>
+                    <div class="team-social">
+                        <a href="#" class="social-link" aria-label="بيهانس"><i class="fab fa-behance"></i></a>
+                        <a href="#" class="social-link" aria-label="درابل"><i class="fab fa-dribbble"></i></a>
+                        <a href="#" class="social-link" aria-label="لينكدإن"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link" aria-label="بريد إلكتروني"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- العضو 3 -->
+            <div class="team-card animate__animated animate__fadeInRight" data-wow-delay="0.3s">
+                <div class="team-image">
+                    <img src="https://img.freepik.com/vecteurs-premium/profil-homme_1083548-15963.jpg?ga=GA1.1.2116059815.1747002610&semt=ais_hybrid&w=740" alt="خالد سعيد" loading="lazy">
+                </div>
+                <div class="team-content">
+                    <span class="team-position">المؤسس والرائد الفكري ل ProConsult</span>
+                    <h3 class="team-name">أولاد ضياف أسامة</h3>
+                    <p class="team-bio">طالب في مرحلة الدراسة الجامعية، يتميز بروح المبادرة والتفكير الريادي،  صاحب فكرة مشروع ProConsult الهادف إلى تقديم حلول استشارية قانونية مبتكرة تعتمد على التقنيات الحديثة. يسعى من خلال هذا المشروع إلى تعزيز الوعي القانوني وتيسير الوصول إلى المعلومات والخدمات القانونية بأسلوب عصري يخدم مختلف شرائح المجتمع</p>
+                    <div class="team-social">
+                        <a href="#" class="social-link" aria-label="جيت هاب"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link" aria-label="ستاك أوفرفلو"><i class="fab fa-stack-overflow"></i></a>
+                        <a href="#" class="social-link" aria-label="لينكدإن"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link" aria-label="بريد إلكتروني"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+          
+            </div>
+        
+        <div class="scroll-indicator animate__animated animate__fadeIn animate__infinite">
+            <i class="fas fa-arrow-left"></i> اسحب لرؤية المزيد
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // تأثيرات الظهور عند التمرير
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.animate__animated');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementPosition < windowHeight - 100) {
+                        const animationClass = element.getAttribute('class').split('animate__animated ')[1];
+                        if (animationClass) {
+                            element.classList.add(animationClass);
+                        }
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // تشغيل مرة أولى عند التحميل
+            
+            // تكرار البطاقات لتحسين تأثير التمرير التلقائي
+            const scrollContainer = document.querySelector('.team-horizontal-scroll');
+            if (scrollContainer && window.innerWidth < 768) {
+                const cards = scrollContainer.innerHTML;
+                scrollContainer.innerHTML += cards;
+                
+                // إعادة تنشيط أنيميشن التمرير التلقائي
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes autoScroll {
+                        0% {
+                            transform: translateX(0);
+                        }
+                        100% {
+                            transform: translateX(calc(-100% + 100vw));
+                        }
+                    }
+                    .team-horizontal-scroll {
+                        animation: autoScroll 15s linear infinite;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // تحسين الأداء
+            if ('IntersectionObserver' in window) {
+                const lazyImages = document.querySelectorAll('.team-image img');
+                
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const image = entry.target;
+                            image.src = image.getAttribute('src');
+                            imageObserver.unobserve(image);
+                        }
+                    });
+                });
+                
+                lazyImages.forEach(image => {
+                    imageObserver.observe(image);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inverra - لوحة التحكم</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            /* الألوان الرئيسية */
+            --primary: #4361ee;
+            --primary-light: #e6e9ff;
+            --primary-dark: #3a0ca3;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --success: #38b000;
+            --warning: #ff9e00;
+            --danger: #ef233c;
+            
+            /* ألوان النص */
+            --text-dark: #212529;
+            --text-gray: #6c757d;
+            --text-light: #f8f9fa;
+            
+            /* الظلال */
+            --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.15);
+            --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.2);
+            
+            /* الانتقالات */
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* الزوايا */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-full: 9999px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f8fafc;
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* التنسيق العام */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        /* شريط التنقل العلوي */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background-color: white;
+            box-shadow: var(--shadow-sm);
+            padding: 1rem 0;
+            height: 70px;
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+        
+        .navbar-brand img {
+            width: 35px;
+            height: 35px;
+            margin-left: 0.75rem;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-light);
+        }
+        
+        /* الشريط الجانبي */
+        .sidebar {
+            position: fixed;
+            top: 70px;
+            right: 0;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: white;
+            box-shadow: var(--shadow-sm);
+            padding: 1.5rem;
+            transition: var(--transition-normal);
+            z-index: 90;
+            overflow-y: auto;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--text-gray);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+            font-size: 0.95rem;
+        }
+        
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+        
+        .sidebar-menu a i {
+            margin-left: 0.75rem;
+            width: 20px;
+            text-align: center;
+            font-size: 1rem;
+        }
+        
+        .sidebar-footer {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            left: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+        
+        /* المحتوى الرئيسي */
+        .main-content {
+            margin-right: 280px;
+            margin-top: 70px;
+            padding: 1.5rem;
+            transition: var(--transition-normal);
+        }
+        
+        /* بطاقات المعلومات */
+        .info-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.25rem;
+            transition: var(--transition-normal);
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .info-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .info-card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+        
+        /* الشبكة */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+        
+        /* الرسوم البيانية */
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+        
+        /* الأزرار */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.65rem 1.25rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: var(--transition-normal);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary-light);
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #d90429;
+        }
+        
+        /* التنبيهات */
+        .alert {
+            padding: 0.85rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 0.85rem;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .alert-success {
+            background-color: rgba(56, 176, 0, 0.1);
+            color: var(--success);
+        }
+        
+        .alert-warning {
+            background-color: rgba(255, 158, 0, 0.1);
+            color: var(--warning);
+        }
+        
+        .alert-danger {
+            background-color: rgba(239, 35, 60, 0.1);
+            color: var(--danger);
+        }
+        
+        .alert i {
+            margin-left: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* الجداول */
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+        
+        th, td {
+            padding: 0.85rem;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+        
+        th {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        /* علامات التبويب */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 1.25rem;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .tab {
+            padding: 0.65rem 1.25rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition-fast);
+            font-size: 0.9rem;
+        }
+        
+        .tab:hover {
+            color: var(--primary);
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* بطاقات المشاريع */
+        .project-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .project-card-img {
+            height: 160px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .project-card-body {
+            padding: 1.25rem;
+        }
+        
+        .project-card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .project-card-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            margin-bottom: 0.85rem;
+        }
+        
+        .progress {
+            height: 6px;
+            background-color: #eee;
+            border-radius: var(--radius-full);
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: var(--radius-full);
+        }
+        
+        /* التنسيقات العامة */
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1.25rem; }
+        .text-center { text-align: center; }
+        .text-muted { color: var(--text-gray); }
+        .text-primary { color: var(--primary); }
+        .text-success { color: var(--success); }
+        .d-flex { display: flex; }
+        .justify-content-between { justify-content: space-between; }
+        .btn-block { display: block; width: 100%; }
+        .btn-sm { padding: 0.5rem 1rem; font-size: 0.8rem; }
+        .badge {
+            display: inline-block;
+            padding: 0.35rem 0.65rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .bg-success { background-color: rgba(56, 176, 0, 0.1); color: var(--success); }
+        .bg-warning { background-color: rgba(255, 158, 0, 0.1); color: var(--warning); }
+        
+        /* زر القائمة للهاتف */
+        .navbar-toggler {
+            display: none;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            background-color: var(--primary-light);
+            border: none;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .navbar-toggler span {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background-color: var(--primary);
+            border-radius: 2px;
+            transition: var(--transition-normal);
+        }
+        
+        .navbar-toggler span:nth-child(1) {
+            top: 12px;
+        }
+        
+        .navbar-toggler span:nth-child(2) {
+            top: 18px;
+        }
+        
+        .navbar-toggler span:nth-child(3) {
+            top: 24px;
+        }
+        
+        .navbar-toggler.active span:nth-child(1) {
+            top: 18px;
+            transform: translateX(-50%) rotate(45deg);
+        }
+        
+        .navbar-toggler.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .navbar-toggler.active span:nth-child(3) {
+            top: 18px;
+            transform: translateX(-50%) rotate(-45deg);
+        }
+        
+        /* طبقة التعتيم */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 80;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-normal);
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* وسائط الاستعلام للشاشات المتوسطة (أقل من 1200px) */
+        @media (max-width: 1199.98px) {
+            .sidebar {
+                width: 240px;
+                padding: 1.25rem;
+            }
+            
+            .main-content {
+                margin-right: 240px;
+            }
+            
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+        }
+        
+        /* وسائط الاستعلام للشاشات الصغيرة (أقل من 992px) */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                transform: translateX(100%);
+                width: 280px;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-right: 0;
+                padding: 1.25rem;
+            }
+            
+            .navbar-toggler {
+                display: block;
+            }
+            
+            .info-card-title {
+                font-size: 1.1rem;
+            }
+            
+            .project-card-img {
+                height: 140px;
+            }
+        }
+        
+        /* وسائط الاستعلام للهواتف (أقل من 768px) */
+        @media (max-width: 767.98px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-container {
+                height: 220px;
+            }
+            
+            .info-card {
+                padding: 1rem;
+            }
+            
+            .project-card-img {
+                height: 120px;
+            }
+            
+            .sidebar-menu a {
+                padding: 0.65rem 0.85rem;
+                font-size: 0.9rem;
+            }
+            
+            .sidebar-footer {
+                padding-top: 1rem;
+            }
+        }
+        
+        /* وسائط الاستعلام للهواتف الصغيرة (أقل من 576px) */
+        @media (max-width: 575.98px) {
+            .navbar-brand {
+                font-size: 1.1rem;
+            }
+            
+            .navbar-brand img {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .user-avatar {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .chart-container {
+                height: 200px;
+            }
+            
+            .info-card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+            
+            .tabs {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل العلوي -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-container">
+                <button class="navbar-toggler">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <a href="#" class="navbar-brand">
+                    <span>Inverra</span>
+                    <img src="assets/images/logo.svg" alt="شعار المنصة">
+                </a>
+            
+                <div class="user-menu">
+                    <div class="dropdown">
+                        <img src="assets/images/user-avatar.jpg" alt="" class="user-avatar">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- الشريط الجانبي -->
+    <aside class="sidebar">
+        <div class="user-info text-center mb-4">
+            <img src="assets/images/user-avatar.jpg" alt=" " class="user-avatar mb-2" style="width: 70px; height: 70px;">
+            <h4 id="userName">أحمد محمد</h4>
+            <p class="text-muted" id="userRole">مستثمر</p>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active"><i class="fas fa-home"></i> نظرة عامة</a></li>
+            <li><a href="#"><i class="fas fa-chart-line"></i> محفظتي</a></li>
+            <li><a class="nav-link" href="#info-card-heade"><i class="fas fa-lightbulb"></i> الفرص الاستثمارية</a></li>
+            <li><a href="#"><i class="fas fa-bell"></i> التنبيهات</a></li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <button id="deleteAccountBtn" class="btn btn-danger btn-block mb-2">
+                <i class="fas fa-trash-alt"></i> حذف الحساب
+            </button>
+            <button id="logoutBtn" class="btn btn-outline btn-block">
+                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+            </button>
+        </div>
+    </aside>
+    
+    <!-- طبقة التعتيم -->
+    <div class="overlay"></div>
+    
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+        <div class="container">
+            <!-- قسم النظرة العامة -->
+            <div class="info-card">
+                <h2 class="info-card-title" id="welcomeTitle">مرحباً بعودتك، أحمد!</h2>
+                <p>هذه نظرة سريعة على أداء محفظتك والفرص المتاحة</p>
+            </div>
+            
+            <!-- بطاقات الإحصائيات -->
+            <div class="grid mb-4">
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <h3 class="info-card-title">إجمالي الاستثمارات</h3>
+                        <i class="fas fa-wallet text-primary" style="font-size: 1.4rem;"></i>
+                    </div>
+                    <h2 class="mb-2">1,250,000 ر.س</h2>
+                    <p class="text-success"><i class="fas fa-arrow-up"></i> 12% عن الشهر الماضي</p>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <h3 class="info-card-title">عدد المشاريع</h3>
+                        <i class="fas fa-project-diagram text-primary" style="font-size: 1.4rem;"></i>
+                    </div>
+                    <h2 class="mb-2">8 مشاريع</h2>
+                    <p class="text-success"><i class="fas fa-arrow-up"></i> مشروعين جديدين</p>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <h3 class="info-card-title">النقاط الاستشارية</h3>
+                        <i class="fas fa-coins text-primary" style="font-size: 1.4rem;"></i>
+                    </div>
+                    <h2 class="mb-2">1,200 نقطة</h2>
+                    <a href="#" class="text-primary">شراء المزيد</a>
+                </div>
+            </div>
+            
+            <!-- أداء المحفظة -->
+            <div class="info-card mb-4">
+                <div class="info-card-header">
+                    <h3 class="info-card-title">أداء المحفظة</h3>
+                    <div class="tabs">
+                        <div class="tab active" data-tab="monthly">شهري</div>
+                        <div class="tab" data-tab="quarterly">ربع سنوي</div>
+                        <div class="tab" data-tab="yearly">سنوي</div>
+                    </div>
+                </div>
+                
+                <div class="tab-content active" id="monthly">
+                    <div class="chart-container">
+                        <canvas id="portfolioChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="quarterly">
+                    <div class="chart-container">
+                        <canvas id="quarterlyChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="yearly">
+                    <div class="chart-container">
+                        <canvas id="yearlyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- التوزيع القطاعي -->
+            <div class="grid mb-4">
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <h3 class="info-card-title">التوزيع القطاعي</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="sectorChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <h3 class="info-card-title">أحدث التنبيهات</h3>
+                        <a href="#" class="text-primary">عرض الكل</a>
+                    </div>
+                    
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle"></i>
+                        <span>تمت الموافقة على طلبك للاستثمار في مشروع "تكنو فارم"</span>
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>مشروع "سوق الالكتروني" يحتاج إلى موافقتك على تحديثات الخطة</span>
+                    </div>
+                    
+                    <div class="alert">
+                        <i class="fas fa-info-circle text-primary"></i>
+                        <span>لديك 3 رسائل جديدة من مؤسسات مهتمة</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- الفرص الاستثمارية -->
+            <div class="info-card mb-4">
+                <div class="info-card-header">
+                    <h3 class="info-card-title">فرص استثمارية مقترحة</h3>
+                    <a href="#" class="btn btn-outline">عرض الكل</a>
+                </div>
+                
+                <div class="grid">
+                    <div class="project-card">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="project-card-img" alt="مشروع">
+                        <div class="project-card-body">
+                            <h4 class="project-card-title">تكنو فارم - الزراعة الذكية</h4>
+                            <div class="project-card-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> الرياض</span>
+                                <span><i class="fas fa-tag"></i> تكنولوجيا زراعية</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 65%;"></div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>65% تم تمويله</span>
+                                <strong>500,000 ر.س</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-4.0.3&ixid=M3wxLib2hvb2tlZCI6dHJ1ZQ%3D%3D&auto=format&fit=crop&w=800&q=80" class="project-card-img" alt="مشروع">
+                        <div class="project-card-body">
+                            <h4 class="project-card-title">مشروع الطاقة الخضراء</h4>
+                            <div class="project-card-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> جدة</span>
+                                <span><i class="fas fa-tag"></i> طاقة متجددة</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 40%;"></div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>40% تم تمويله</span>
+                                <strong>2,500,000 ر.س</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="project-card-img" alt="مشروع">
+                        <div class="project-card-body">
+                            <h4 class="project-card-title">منصة التجارة الإلكترونية</h4>
+                            <div class="project-card-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> الدمام</span>
+                                <span><i class="fas fa-tag"></i> تجارة إلكترونية</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 80%;"></div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>80% تم تمويله</span>
+                                <strong>750,000 ر.س</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- المشاريع الحالية -->
+            <div class="info-card">
+                <div class="info-card-header">
+                    <h3 class="info-card-title">مشاريعك الحالية</h3>
+                </div>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>المشروع</th>
+                                <th>القيمة</th>
+                                <th>العائد المتوقع</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>تطبيق توصيل طعام</td>
+                                <td>250,000 ر.س</td>
+                                <td>18% سنوياً</td>
+                                <td><span class="badge bg-success">نشط</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">التفاصيل</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>منصة تعليمية</td>
+                                <td>180,000 ر.س</td>
+                                <td>15% سنوياً</td>
+                                <td><span class="badge bg-success">نشط</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">التفاصيل</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>مصنع إعادة تدوير</td>
+                                <td>500,000 ر.س</td>
+                                <td>22% سنوياً</td>
+                                <td><span class="badge bg-warning">قيد المراجعة</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">التفاصيل</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signOut,
+            deleteUser,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { 
+            getFirestore,
+            doc,
+            deleteDoc
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBtV4DuhZUM1H5lz8B7jaFlSFoYindrUoM",
+            authDomain: "proconsult24-fbd28.firebaseapp.com",
+            projectId: "proconsult24-fbd28",
+            storageBucket: "proconsult24-fbd28.appspot.com",
+            messagingSenderId: "131999055005",
+            appId: "1:131999055005:web:e4e0158fcb5331c208a874",
+            measurementId: "G-TET6DRPQ3T"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // DOM Elements
+        const navbarToggler = document.querySelector('.navbar-toggler');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.overlay');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+        const userName = document.getElementById('userName');
+        const userRole = document.getElementById('userRole');
+        const welcomeTitle = document.getElementById('welcomeTitle');
+
+        // Function to clear all session data
+        const clearSessionData = () => {
+            sessionStorage.removeItem('user');
+            localStorage.removeItem('firebase:authUser:AIzaSyBtV4DuhZUM1H5lz8B7jaFlSFoYindrUoM:[DEFAULT]');
+        };
+
+        // Function to redirect to login page
+        const redirectToLogin = () => {
+            window.location.href = 'login.html';
+        };
+
+        // Function to handle logout
+        const handleLogout = async () => {
+            try {
+                // Show loading indicator if needed
+                
+                // Sign out from Firebase
+                await signOut(auth);
+                
+                // Clear all session data
+                clearSessionData();
+                
+                // Redirect to login page
+                redirectToLogin();
+            } catch (error) {
+                console.error('Error signing out:', error);
+                alert('حدث خطأ أثناء تسجيل الخروج. يرجى المحاولة مرة أخرى.');
+            }
+        };
+
+        // Check user authentication state
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                // User is not logged in, clear session and redirect
+                clearSessionData();
+                redirectToLogin();
+            } else {
+                // Load user data from sessionStorage
+                const userData = JSON.parse(sessionStorage.getItem('user'));
+                
+                if (userData) {
+                    // Update UI with user data
+                    userName.textContent = userData.displayName || 'مستخدم';
+                    userRole.textContent = userData.accountType === 'investor' ? 'مستثمر' : 'شركة ناشئة';
+                    welcomeTitle.textContent = `مرحباً بعودتك، ${userData.displayName || 'مستخدم'}!`;
+                } else {
+                    // If no user data in sessionStorage but user is authenticated
+                    // This might happen if sessionStorage was cleared manually
+                    // We should redirect to login to re-establish the session
+                    clearSessionData();
+                    redirectToLogin();
+                }
+            }
+        });
+
+        // Mobile sidebar toggle
+        navbarToggler.addEventListener('click', function() {
+            this.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+        
+        overlay.addEventListener('click', function() {
+            navbarToggler.classList.remove('active');
+            sidebar.classList.remove('active');
+            this.classList.remove('active');
+        });
+
+        // Tab control
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                tabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Logout button event listener
+        logoutBtn.addEventListener('click', handleLogout);
+
+        // Delete account function
+        deleteAccountBtn.addEventListener('click', async () => {
+            const user = auth.currentUser;
+            
+            if (!user) {
+                redirectToLogin();
+                return;
+            }
+            
+            const confirmDelete = confirm('هل أنت متأكد أنك تريد حذف حسابك؟ سيتم حذف جميع بياناتك بشكل نهائي ولا يمكن استرجاعها.');
+            
+            if (confirmDelete) {
+                try {
+                    // 1. Delete user data from Firestore
+                    const userDocRef = doc(db, "users", user.uid);
+                    await deleteDoc(userDocRef);
+                    
+                    // 2. Delete user from Authentication
+                    await deleteUser(user);
+                    
+                    // 3. Clear all session data
+                    clearSessionData();
+                    
+                    // 4. Redirect to login page
+                    redirectToLogin();
+                } catch (error) {
+                    console.error('Error deleting account:', error);
+                    
+                    let errorMessage = 'حدث خطأ أثناء حذف الحساب. يرجى المحاولة مرة أخرى.';
+                    
+                    if (error.code === 'auth/requires-recent-login') {
+                        errorMessage = 'لحذف الحساب، يرجى تسجيل الدخول مرة أخرى لتأكيد هويتك.';
+                    }
+                    
+                    alert(errorMessage);
+                }
+            }
+        });
+
+        // Charts initialization
+        // أداء المحفظة (شهري)
+        const portfolioCtx = document.getElementById('portfolioChart').getContext('2d');
+        const portfolioChart = new Chart(portfolioCtx, {
+            type: 'line',
+            data: {
+                labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'],
+                datasets: [{
+                    label: 'قيمة المحفظة',
+                    data: [850000, 900000, 950000, 1000000, 1100000, 1250000],
+                    borderColor: '#4361ee',
+                    backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+        
+        // أداء المحفظة (ربع سنوي)
+        const quarterlyCtx = document.getElementById('quarterlyChart').getContext('2d');
+        const quarterlyChart = new Chart(quarterlyCtx, {
+            type: 'line',
+            data: {
+                labels: ['الربع الأول', 'الربع الثاني', 'الربع الثالث', 'الربع الرابع'],
+                datasets: [{
+                    label: 'قيمة المحفظة',
+                    data: [700000, 900000, 1100000, 1250000],
+                    borderColor: '#4361ee',
+                    backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+        
+        // أداء المحفظة (سنوي)
+        const yearlyCtx = document.getElementById('yearlyChart').getContext('2d');
+        const yearlyChart = new Chart(yearlyCtx, {
+            type: 'line',
+            data: {
+                labels: ['2020', '2021', '2022', '2023'],
+                datasets: [{
+                    label: 'قيمة المحفظة',
+                    data: [500000, 750000, 1000000, 1250000],
+                    borderColor: '#4361ee',
+                    backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+        
+        // التوزيع القطاعي
+        const sectorCtx = document.getElementById('sectorChart').getContext('2d');
+        const sectorChart = new Chart(sectorCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['التكنولوجيا', 'الطاقة', 'التجارة', 'الخدمات', 'الزراعة'],
+                datasets: [{
+                    data: [35, 25, 20, 15, 5],
+                    backgroundColor: [
+                        '#4361ee',
+                        '#3a0ca3',
+                        '#4cc9f0',
+                        '#4895ef',
+                        '#3f37c9'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'left'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

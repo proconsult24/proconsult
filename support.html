@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدردشة المباشرة - Inverra الدعم الفني</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #e6e9ff;
+            --primary-dark: #3a0ca3;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+            
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f5f7ff;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .chat-app {
+            display: flex;
+            height: 100vh;
+            max-width: 1600px;
+            margin: 0 auto;
+            box-shadow: var(--shadow-lg);
+            background: white;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        /* الشريط الجانبي */
+        .sidebar {
+            width: 380px;
+            background: var(--dark);
+            color: white;
+            border-left: 1px solid rgba(255,255,255,0.1);
+            transform: translateX(0);
+            transition: var(--transition);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .sidebar-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .close-sidebar {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.7);
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-sidebar:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .conversation-info {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .info-item {
+            margin-bottom: 1.25rem;
+        }
+        
+        .info-label {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-bottom: 0.25rem;
+        }
+        
+        .info-value {
+            font-weight: 500;
+        }
+        
+        .sidebar-menu {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem 0;
+        }
+        
+        .menu-item {
+            padding: 0.85rem 1.5rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .menu-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .menu-item i {
+            margin-left: 0.75rem;
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .menu-item.active {
+            background: rgba(67, 97, 238, 0.2);
+            border-right: 3px solid var(--primary);
+        }
+        
+        /* منطقة المحادثة الرئيسية */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .chat-header {
+            padding: 1rem 1.5rem;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+            z-index: 5;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .agent-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .agent-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--gradient);
+            margin-left: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .agent-details h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.15rem;
+        }
+        
+        .agent-status {
+            display: flex;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            margin-left: 0.5rem;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .chat-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--light);
+            border: none;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .action-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        
+        /* منطقة الرسائل */
+        .messages-container {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background: url('https://transparenttextures.com/patterns/concrete-wall.png') var(--light);
+            background-size: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .welcome-screen {
+            margin: auto;
+            text-align: center;
+            max-width: 500px;
+            padding: 2rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .welcome-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            background: var(--primary-light);
+            width: 100px;
+            height: 100px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .welcome-title {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+        
+        .welcome-text {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .start-chat-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0.9rem 2rem;
+            font-size: 1rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .start-chat-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(67, 97, 238, 0.3);
+        }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transition: var(--transition);
+            padding: 0 1rem;
+        }
+        
+        .typing-indicator.active {
+            opacity: 1;
+        }
+        
+        .typing-dots {
+            display: flex;
+            margin-right: 0.75rem;
+        }
+        
+        .typing-dots span {
+            width: 7px;
+            height: 7px;
+            background: #999;
+            border-radius: 50%;
+            margin-left: 0.3rem;
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dots span:nth-child(1) {
+            animation-delay: 0s;
+        }
+        
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        .typing-text {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        /* الرسائل */
+        .message {
+            max-width: 75%;
+            margin-bottom: 1.25rem;
+            padding: 0.9rem 1.25rem;
+            border-radius: var(--radius-lg);
+            position: relative;
+            animation: fadeInUp 0.3s ease-out;
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+        
+        .incoming {
+            align-self: flex-start;
+            background: white;
+            border-top-right-radius: 4px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .outgoing {
+            align-self: flex-end;
+            background: var(--gradient);
+            color: white;
+            border-top-left-radius: 4px;
+        }
+        
+        .message-time {
+            display: block;
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+        }
+        
+        .incoming .message-time {
+            text-align: left;
+            color: #888;
+        }
+        
+        .outgoing .message-time {
+            text-align: right;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        /* منطقة إدخال الرسالة */
+        .message-input-area {
+            padding: 1rem 1.5rem;
+            background: white;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .attachment-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .attachment-btn:hover {
+            background: var(--primary-light);
+        }
+        
+        .message-input {
+            flex: 1;
+            padding: 0.9rem 1.25rem;
+            border: 1px solid #e0e0e0;
+            border-radius: var(--radius-xl);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            min-height: 50px;
+            max-height: 120px;
+            resize: none;
+        }
+        
+        .message-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+        
+        .send-btn {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.25);
+            flex-shrink: 0;
+        }
+        
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(67, 97, 238, 0.3);
+        }
+        
+        .send-btn:disabled {
+            background: #ccc;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+        
+        /* زر تبديل الشريط الجانبي للجوال */
+        .sidebar-toggle {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--primary);
+            color: white;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .sidebar-toggle:hover {
+            transform: scale(1.05);
+        }
+        
+        /* تأثيرات الحركة */
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes typingAnimation {
+            0% { transform: translateY(0); opacity: 0.4; }
+            50% { transform: translateY(-5px); opacity: 1; }
+            100% { transform: translateY(0); opacity: 0.4; }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* التكيف مع الشاشات المختلفة */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 320px;
+            }
+            
+            .message {
+                max-width: 80%;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .sidebar {
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 100%;
+                width: 320px;
+                transform: translateX(100%);
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .sidebar-toggle {
+                opacity: 1;
+                pointer-events: all;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .chat-app {
+                border-radius: 0;
+                height: 100vh;
+            }
+            
+            .welcome-screen {
+                padding: 1.5rem;
+            }
+            
+            .welcome-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 2.5rem;
+            }
+            
+            .welcome-title {
+                font-size: 1.5rem;
+            }
+            
+            .message {
+                max-width: 85%;
+                padding: 0.8rem 1.1rem;
+            }
+            
+            .message-input-area {
+                padding: 0.8rem 1rem;
+            }
+            
+            .send-btn {
+                width: 42px;
+                height: 42px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .sidebar {
+                width: 280px;
+            }
+            
+            .chat-header {
+                padding: 0.8rem 1rem;
+            }
+            
+            .agent-avatar {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+                margin-left: 0.75rem;
+            }
+            
+            .messages-container {
+                padding: 1rem;
+            }
+            
+            .message {
+                max-width: 90%;
+                padding: 0.7rem 1rem;
+            }
+            
+            .message-input {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .welcome-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+            
+            .welcome-title {
+                font-size: 1.3rem;
+            }
+            
+            .welcome-text {
+                font-size: 0.95rem;
+            }
+            
+            .start-chat-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.95rem;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .message {
+                max-width: 95%;
+            }
+            
+            .attachment-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-app">
+        <!-- زر تبديل الشريط الجانبي للجوال -->
+        <button class="sidebar-toggle animate__animated animate__fadeInLeft">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- الشريط الجانبي -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">تفاصيل المحادثة</div>
+                <button class="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="conversation-info">
+                <div class="info-item">
+                    <div class="info-label">رقم التذكرة</div>
+                    <div class="info-value">#CHT-2023-5874</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">الممثل</div>
+                    <div class="info-value">أحمد محمد</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">وقت البدء</div>
+                    <div class="info-value">٢٥ نوفمبر ٢٠٢٣ - ١٠:٣٠ ص</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">المدة</div>
+                    <div class="info-value">٥ دقائق</div>
+                </div>
+            </div>
+            
+            <div class="sidebar-menu">
+                <div class="menu-item active">
+                    <i class="fas fa-comment-alt"></i>
+                    <span>المحادثة الحالية</span>
+                </div>
+                
+                <div class="menu-item">
+                    <i class="fas fa-history"></i>
+                    <span>سجل المحادثات</span>
+                </div>
+                
+                <div class="menu-item">
+                    <i class="fas fa-user"></i>
+                    <span>معلومات الحساب</span>
+                </div>
+                
+                <div class="menu-item">
+                    <i class="fas fa-question-circle"></i>
+                    <span>الأسئلة الشائعة</span>
+                </div>
+                
+                <div class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>الإعدادات</span>
+                </div>
+                
+                <div class="menu-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>إنهاء المحادثة</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- منطقة المحادثة الرئيسية -->
+        <div class="chat-area">
+            <!-- رأس المحادثة -->
+            <div class="chat-header">
+                <div class="agent-info">
+                    <div class="agent-avatar animate__animated animate__bounceIn">أ</div>
+                    <div class="agent-details">
+                        <h3>أحمد محمد</h3>
+                        <div class="agent-status">
+                            <span>متصل الآن</span>
+                            <div class="status-dot"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-actions">
+                    <button class="action-btn" title="إرفاق ملف">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                    <button class="action-btn" title="إرسال صورة">
+                        <i class="fas fa-image"></i>
+                    </button>
+                    <button class="action-btn" title="إرسال إيموجي">
+                        <i class="far fa-smile"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- منطقة الرسائل -->
+            <div class="messages-container" id="messagesContainer">
+                <!-- شاشة الترحيب -->
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div class="welcome-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h2 class="welcome-title">مرحباً بك في دعم ProConsult</h2>
+                    <p class="welcome-text">فريق الدعم لدينا متاح لمساعدتك على مدار الساعة. سيتم ربطك بأول ممثل متاح لمساعدتك في حل أي مشكلة تواجهك.</p>
+                    <button class="start-chat-btn" id="startChatBtn">
+                        <i class="fas fa-comment-dots"></i>
+                        بدء المحادثة
+                    </button>
+                </div>
+                
+                <!-- مؤشر الكتابة -->
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <span class="typing-text">يكتب...</span>
+                </div>
+                
+                <!-- سيتم إضافة الرسائل هنا عبر الجافاسكريبت -->
+            </div>
+            
+            <!-- منطقة إدخال الرسالة -->
+            <div class="message-input-area">
+                <button class="attachment-btn" id="attachBtn">
+                    <i class="fas fa-paperclip"></i>
+                </button>
+                <textarea class="message-input" id="messageInput" placeholder="اكتب رسالتك هنا..." disabled></textarea>
+                <button class="send-btn" id="sendBtn" disabled>
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const closeSidebar = document.querySelector('.close-sidebar');
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const messagesContainer = document.getElementById('messagesContainer');
+            const startChatBtn = document.getElementById('startChatBtn');
+            const messageInput = document.getElementById('messageInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const attachBtn = document.getElementById('attachBtn');
+            const typingIndicator = document.getElementById('typingIndicator');
+            
+            // تبديل الشريط الجانبي
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+            
+            closeSidebar.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+            });
+            
+            // بدء المحادثة
+            startChatBtn.addEventListener('click', function() {
+                welcomeScreen.style.display = 'none';
+                messageInput.disabled = false;
+                messageInput.focus();
+                
+                // إضافة رسالة ترحيبية من الممثل
+                setTimeout(() => {
+                    showTypingIndicator();
+                    
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        addMessage('مرحباً بك في دعم ProConsult! كيف يمكنني مساعدتك اليوم؟', 'incoming');
+                    }, 2000);
+                }, 800);
+            });
+            
+            // إظهار مؤشر الكتابة
+            function showTypingIndicator() {
+                typingIndicator.classList.add('active');
+                scrollToBottom();
+            }
+            
+            // إخفاء مؤشر الكتابة
+            function hideTypingIndicator() {
+                typingIndicator.classList.remove('active');
+            }
+            
+            // إرسال الرسالة
+            function sendMessage() {
+                const message = messageInput.value.trim();
+                if (message === '') return;
+                
+                addMessage(message, 'outgoing');
+                messageInput.value = '';
+                sendBtn.disabled = true;
+                
+                // محاكاة رد الممثل
+                setTimeout(() => {
+                    showTypingIndicator();
+                    
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        
+                        const responses = [
+                            'شكراً لتواصلك معنا. كيف يمكنني مساعدتك اليوم؟',
+                            'أنا هنا لمساعدتك. هل يمكنك توضيح استفسارك أكثر؟',
+                            'لقد تلقيت استفسارك. دعني أتحقق من ذلك من أجلك.',
+                            'هل لديك أي استفسارات أخرى؟',
+                            'شكراً لصبرك. سأحل هذه المشكلة لك في أقرب وقت.'
+                        ];
+                        
+                        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                        addMessage(randomResponse, 'incoming');
+                    }, 1500 + Math.random() * 2000);
+                }, 500 + Math.random() * 1000);
+            }
+            
+            // إضافة رسالة جديدة
+            function addMessage(text, type) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${type}`;
+                
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
+                
+                messageDiv.innerHTML = `
+                    <div>${text}</div>
+                    <span class="message-time">${timeString}</span>
+                `;
+                
+                messagesContainer.appendChild(messageDiv);
+                scrollToBottom();
+            }
+            
+            // التمرير إلى آخر رسالة
+            function scrollToBottom() {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+            
+            // تفعيل/تعطيل زر الإرسال عند الكتابة
+            messageInput.addEventListener('input', function() {
+                sendBtn.disabled = this.value.trim() === '';
+            });
+            
+            // إرسال بالضغط على زر الإدخال
+            messageInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    if (!sendBtn.disabled) {
+                        sendMessage();
+                    }
+                }
+            });
+            
+            // إرسال بالضغط على زر الإرسال
+            sendBtn.addEventListener('click', sendMessage);
+            
+            // زر الإرفاق
+            attachBtn.addEventListener('click', function() {
+                alert('سيتم فتح نافذة لاختيار الملفات');
+            });
+            
+            // رسالة ترحيبية تلقائية بعد 3 ثواني إذا لم يبدأ المستخدم
+            setTimeout(() => {
+                if (welcomeScreen.style.display !== 'none') {
+                    startChatBtn.click();
+                }
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

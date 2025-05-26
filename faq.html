@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProConsult - الأسئلة الشائعة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: rgba(67, 97, 238, 0.1);
+            --primary-dark: #3a0ca3;
+            --gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            --text-dark: #2d3748;
+            --text-gray: #718096;
+            --light-bg: #f8fafc;
+            --radius-lg: 16px;
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+        
+        /* تصميم الهيدر */
+        .faq-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .faq-header h1 {
+            font-size: 2.8rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .faq-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+        
+        .faq-header p {
+            color: var(--text-gray);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* تصنيفات الأسئلة */
+        .faq-categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .category-btn {
+            padding: 0.8rem 1.8rem;
+            background: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .category-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--gradient);
+            transition: var(--transition);
+            z-index: -1;
+            border-radius: 50px;
+        }
+        
+        .category-btn:hover, 
+        .category-btn.active {
+            color: white;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .category-btn:hover::before,
+        .category-btn.active::before {
+            width: 100%;
+        }
+        
+        /* حاوية الأسئلة */
+        .faq-container {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            margin-bottom: 3rem;
+            transition: var(--transition);
+        }
+        
+        .faq-container:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        /* عناصر الأسئلة */
+        .faq-item {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        
+        .faq-question {
+            padding: 1.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .faq-question:hover {
+            background: var(--primary-light);
+        }
+        
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .faq-item.active .faq-question::after {
+            content: '-';
+            color: white;
+        }
+        
+        .faq-item.active .faq-question {
+            background: var(--gradient);
+            color: white;
+        }
+        
+        .faq-answer {
+            padding: 0 1.8rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+            color: var(--text-gray);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 1.8rem 2rem;
+            max-height: 500px;
+        }
+        
+        /* قسم الدعم */
+        .contact-support {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 3rem;
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-support::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+        }
+        
+        .contact-support h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .contact-support h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+        
+        .contact-support p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2.5rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(135deg, #3a0ca3 0%, #4361ee 100%);
+            transition: var(--transition);
+            z-index: -1;
+            border-radius: 50px;
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+        }
+        
+        .contact-btn:hover::before {
+            width: 100%;
+        }
+        
+        .contact-btn i {
+            margin-right: 0.5rem;
+            transition: var(--transition);
+        }
+        
+        .contact-btn:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* تأثيرات الحركة */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        /* التجاوب مع الشاشات */
+        @media (max-width: 768px) {
+            .container {
+                padding: 2.5rem 1rem;
+            }
+            
+            .faq-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .faq-header p {
+                font-size: 1rem;
+            }
+            
+            .faq-question {
+                padding: 1.3rem;
+                font-size: 1.1rem;
+            }
+            
+            .contact-support {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="faq-header fade-in">
+            <h1>الأسئلة الشائعة</h1>
+            <p>ابحث عن إجابات للأسئلة الأكثر شيوعاً حول منصة ProConsult للاستثمار والاستشارات المالية</p>
+        </div>
+        
+        <div class="faq-categories fade-in" style="animation-delay: 0.2s">
+            <button class="category-btn active" data-category="all">الكل</button>
+            <button class="category-btn" data-category="account">الحساب</button>
+            <button class="category-btn" data-category="investment">الاستثمار</button>
+            <button class="category-btn" data-category="points">النقاط</button>
+            <button class="category-btn" data-category="technical">فنية</button>
+        </div>
+        
+        <div class="faq-container fade-in" style="animation-delay: 0.4s">
+            <!-- الأسئلة المتعلقة بالحساب -->
+            <div class="faq-item" data-category="account">
+                <div class="faq-question">
+                    <span>كيف يمكنني إنشاء حساب جديد على المنصة؟</span>
+                </div>
+                <div class="faq-answer">
+                    <p>لإنشاء حساب جديد في ProConsult. اضغط على زر "تسجيل جديد" في أعلى الصفحة الرئيسية. ستحتاج إلى إدخال معلوماتك الأساسية بما في ذلك الاسم الكامل، البريد الإلكتروني، رقم الهاتف، وكلمة مرور قوية. بعد التسجيل، سنرسل لك رسالة تحقق تحتوي على رابط التفعيل. يرجى التحقق من صندوق البريد المزعج إذا لم تتلق الرسالة خلال دقائق.</p>
+                    <p class="mt-3"><strong>نصيحة:</strong> استخدم كلمة مرور قوية تحتوي على أحرف كبيرة وصغيرة وأرقام ورموز خاصة.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" data-category="account">
+                <div class="faq-question">
+                    <span>كيف يمكنني استعادة كلمة المرور المنسية؟</span>
+                </div>
+                <div class="faq-answer">
+                    <p>إذا نسيت كلمة المرور الخاصة بك:</p>
+                    <ol class="mt-2" style="padding-right: 1.5rem;">
+                        <li>اضغط على "نسيت كلمة المرور" في صفحة تسجيل الدخول</li>
+                        <li>أدخل البريد الإلكتروني المسجل في حسابك</li>
+                        <li>افتح الرسالة التي سنرسلها إليك واضغط على رابط إعادة التعيين</li>
+                        <li>اختر كلمة مرور جديدة وقم بتأكيدها</li>
+                    </ol>
+                    <p class="mt-3"><i class="fas fa-exclamation-circle text-primary"></i> إذا لم تتلق رسالة إعادة التعيين، يرجى التحقق من مجلد البريد المزعج أو الاتصال بدعم العملاء.</p>
+                </div>
+            </div>
+            
+            <!-- الأسئلة المتعلقة بالاستثمار -->
+            <div class="faq-item" data-category="investment">
+                <div class="faq-question">
+                    <span>ما هي الحدود الدنيا والقصوى للاستثمار؟</span>
+                </div>
+                <div class="faq-answer">
+                    <p>تختلف الحدود الاستثمارية حسب نوع المشروع:</p>
+                    <ul class="mt-2" style="padding-right: 1.5rem;">
+                        <li><strong>المشاريع الصغيرة:</strong> $ من   1,000 $إلى  50,000   </li>
+                        <li><strong>المشاريع المتوسطة:</strong>$ من 50,000 $إلى 500,000 </li>
+                        <li><strong>المشاريع الكبيرة:</strong> من 500,000 $ فما فوق</li>
+                    </ul>
+                    <p class="mt-3">يمكنك تصفية المشاريع حسب ميزانيتك من خلال أدوات التصفية المتقدمة في صفحة "الفرص الاستثمارية".</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" data-category="investment">
+                <div class="faq-question">
+                    <span>كيف يمكنني متابعة أداء استثماراتي؟</span>
+                </div>
+                <div class="faq-answer">
+                    <p>توفر Inverra لوحة تحكم متكاملة لمتابعة استثماراتك:</p>
+                    <ul class="mt-2" style="padding-right: 1.5rem;">
+                        <li>عرض القيمة الحالية لاستثماراتك</li>
+                        <li>مخططات أداء تفاعلية</li>
+                        <li>تقارير ربع سنوية مفصلة</li>
+                        <li>تنبيهات عند حدوث تغييرات مهمة</li>
+                    </ul>
+                    <p class="mt-3">يمكنك الوصول إلى هذه الأدوات من قسم "محفظتي" بعد تسجيل الدخول.</p>
+                </div>
+            </div>
+            
+            <!-- الأسئلة المتعلقة بالنقاط -->
+            <div class="faq-item" data-category="points">
+                <div class="faq-question">
+                    <span>ما هي النقاط الاستشارية وكيف تعمل؟</span>
+                </div>
+                <div class="faq-answer">
+                    <p>النقاط الاستشارية هي نظام داخلي في ProConsult يسمح لك بالحصول على استشارات مالية متخصصة:</p>
+                    <ul class="mt-2" style="padding-right: 1.5rem;">
+                        <li>1 نقطة = 10 ريال سعودي</li>
+                        <li>استشارة أساسية: 50 نقطة (30 دقيقة)</li>
+                        <li>استشارة متقدمة: 100 نقطة (60 دقيقة)</li>
+                        <li>تحليل استثماري مفصل: 200 نقطة</li>
+                    </ul>
+                    <p class="mt-3">يمكنك شراء النقاط بكميات كبيرة للحصول على خصومات تصل إلى 20%.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" data-category="points">
+                <div class="faq-question">
+                    <span>هل يمكنني استرداد النقاط غير المستخدمة؟</span>
+                </div>
+                <div class="faq-answer">
+                    <p>نعم، يمكنك استرداد النقاط غير المستخدمة وفق الشروط التالية:</p>
+                    <ul class="mt-2" style="padding-right: 1.5rem;">
+                        <li>النقاط لم يتم استخدام أي منها</li>
+                        <li>صلاحية النقاط لم تنته بعد</li>
+                        <li>يتم استرداد 70% من قيمة النقاط</li>
+                        <li>الحد الأدنى للاسترداد 500 نقطة</li>
+                    </ul>
+                    <p class="mt-3">لطلب الاسترداد، يرجى التواصل مع خدمة العملاء من خلال قسم "الدعم" في حسابك.</p>
+                </div>
+            </div>
+            
+            <!-- الأسئلة الفنية -->
+            <div class="faq-item" data-category="technical">
+                <div class="faq-question">
+                    <span>ما هي متطلبات النظام لاستخدام المنصة؟</span>
+                </div>
+                <div class="faq-answer">
+                    <p>لأفضل تجربة استخدام، نوصي بما يلي:</p>
+                    <div class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-primary mb-2">لأجهزة الكمبيوتر:</h4>
+                            <ul style="padding-right: 1rem;">
+                                <li>أحدث إصدار من Chrome أو Firefox</li>
+                                <li>شاشة بدقة 1280x768 على الأقل</li>
+                                <li>اتصال إنترنت بسرعة 5 Mbps</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-primary mb-2">للأجهزة المحمولة:</h4>
+                            <ul style="padding-right: 1rem;">
+                                <li>iOS 12+ أو Android 8+</li>
+                                <li>تطبيق ProConsult   الرسمي قريبا</li>
+                                <li>اتصال 4G/LTE</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-item" data-category="technical">
+                <div class="faq-question">
+                    <span>كيف يمكنني الإبلاغ عن مشكلة تقنية؟</span>
+                </div>
+                <div class="faq-answer">
+                    <p>لإبلاغنا عن أي مشكلة تقنية:</p>
+                    <ol class="mt-2" style="padding-right: 1.5rem;">
+                        <li>قم بتسجيل الدخول إلى حسابك</li>
+                        <li>انتقل إلى قسم "الدعم الفني"</li>
+                        <li>اختر "الإبلاغ عن مشكلة"</li>
+                        <li>املأ النموذج مع وصف تفصيلي للمشكلة</li>
+                        <li>أرفق لقطات الشاشة إذا لزم الأمر</li>
+                    </ol>
+                    <p class="mt-3">سيقوم فريق الدعم لدينا بالرد عليك خلال 24 ساعة عمل.</p>
+                </div>
+            </div>
+            
+            <!-- أسئلة عامة -->
+            <div class="faq-item" data-category="account">
+                <div class="faq-question">
+                    <span>كيف يمكنني تحديث معلومات حسابي الشخصية؟</span>
+                </div>
+                <div class="faq-answer">
+                    <p>لتحديث معلومات حسابك:</p>
+                    <ul class="mt-2" style="padding-right: 1.5rem;">
+                        <li>انتقل إلى "إعدادات الحساب"</li>
+                        <li>اختر "المعلومات الشخصية"</li>
+                        <li>قم بتعديل البيانات المطلوبة</li>
+                        <li>اضغط على "حفظ التغييرات"</li>
+                    </ul>
+                    <p class="mt-3"><i class="fas fa-lock text-primary"></i> بعض التغييرات مثل البريد الإلكتروني أو رقم الهاتف تتطلب التحقق من الهوية لأسباب أمنية.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" data-category="investment">
+                <div class="faq-question">
+                    <span>ما هي سياسة الضمانات والمخاطر؟</span>
+                </div>
+                <div class="faq-answer">
+                    <p>في Inverra، نؤمن بالشفافية التامة فيما يتعلق بالمخاطر:</p>
+                    <ul class="mt-2" style="padding-right: 1.5rem;">
+                        <li>جميع الاستثمارات تحمل درجة من المخاطرة</li>
+                        <li>لا توجد ضمانات على العوائد</li>
+                        <li>نقدم تحليلات دقيقة وتوقعات واقعية</li>
+                        <li>نوصي بتنويع الاستثمارات لتقليل المخاطر</li>
+                    </ul>
+                    <p class="mt-3">يمكنك الاطلاع على تحليل المخاطر المفصل لكل مشروع قبل الاستثمار.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-support fade-in" style="animation-delay: 0.6s">
+            <h3>لا تزال لديك أسئلة؟</h3>
+            <p>فريق الدعم لدينا متاح على مدار الساعة لمساعدتك في أي استفسار</p>
+            <a href="support.html" class="contact-btn">
+                <i class="fas fa-headset"></i> تواصل مع الدعم الآن
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // تنشيط/إلغاء تنشيط الأسئلة
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const item = question.parentElement;
+                    const isActive = item.classList.contains('active');
+                    
+                    // إغلاق جميع العناصر أولاً
+                    document.querySelectorAll('.faq-item').forEach(el => {
+                        el.classList.remove('active');
+                    });
+                    
+                    // فتح العنصر المحدد إذا لم يكن نشطاً
+                    if (!isActive) {
+                        item.classList.add('active');
+                        
+                        // تأثير حركي للسؤال عند الفتح
+                        question.style.transform = 'translateY(-5px)';
+                        setTimeout(() => {
+                            question.style.transform = 'translateY(0)';
+                        }, 300);
+                    }
+                });
+            });
+            
+            // تصفية الأسئلة حسب التصنيف
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // تأثير الحركة للأزرار
+                    btn.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        btn.style.transform = 'scale(1)';
+                    }, 200);
+                    
+                    // تغيير التصنيف النشط
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const category = btn.getAttribute('data-category');
+                    const faqItems = document.querySelectorAll('.faq-item');
+                    
+                    // تأثير التصفية
+                    faqItems.forEach(item => {
+                        if (category === 'all' || item.getAttribute('data-category') === category) {
+                            item.style.display = 'block';
+                            item.style.animation = 'fadeInUp 0.5s ease forwards';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // فتح أول سؤال تلقائياً
+            if (faqQuestions.length > 0) {
+                setTimeout(() => {
+                    faqQuestions[0].click();
+                }, 800);
+            }
+            
+            // تأثيرات الحركة عند التمرير
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElements.forEach(el => {
+                el.style.opacity = 0;
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

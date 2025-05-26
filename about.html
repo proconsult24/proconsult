@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>من نحن | ProConsult - المنصة الرائدة للاستثمار في الشركات الناشئة</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css">
+    <style>
+        /* النظام اللوني المتكامل */
+        :root {
+            --primary-50: #f0f4ff;
+            --primary-100: #dbe8ff;
+            --primary-200: #b8d1ff;
+            --primary-300: #85adff;
+            --primary-400: #527bff;
+            --primary-500: #4361ee;
+            --primary-600: #3a4fd9;
+            --primary-700: #2f3fb5;
+            --primary-800: #253194;
+            --primary-900: #1a237e;
+            
+            --secondary-500: #3f37c9;
+            --success-500: #4cc9f0;
+            --danger-500: #f72585;
+            --warning-500: #f8961e;
+            --dark-500: #212529;
+            --light-500: #f8f9fa;
+            --gray-500: #6c757d;
+            
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.16);
+            
+            --border-radius-sm: 8px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 16px;
+            
+            --transition-base: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--primary-50);
+            color: var(--dark-500);
+            line-height: 1.6;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-300) 100%);
+            color: white;
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-py {
+            padding: 5rem 0;
+        }
+        
+        .feature-card {
+            border: none;
+            border-radius: var(--border-radius-lg);
+            transition: var(--transition-base);
+            height: 100%;
+            box-shadow: var(--shadow-sm);
+            background-color: white;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            background-color: var(--primary-100);
+            color: var(--primary-500);
+        }
+        
+        .timeline {
+            position: relative;
+            padding-right: 30px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 15px;
+            width: 2px;
+            height: 100%;
+            background-color: var(--primary-300);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--primary-500);
+            border: 4px solid white;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-500);
+            border-color: var(--primary-500);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-600);
+            border-color: var(--primary-600);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-500);
+            border-color: var(--primary-500);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-500);
+            color: white;
+        }
+        
+        .text-primary {
+            color: var(--primary-500) !important;
+        }
+        
+        .bg-primary {
+            background-color: var(--primary-500) !important;
+        }
+        
+        .bg-light {
+            background-color: var(--primary-50) !important;
+        }
+
+        /* تخصيصات الفوتر الجديدة */
+        footer {
+            background-color: var(--primary-800);
+            color: white;
+        }
+
+        footer a {
+            color: var(--primary-200);
+            text-decoration: none;
+            transition: var(--transition-base);
+        }
+
+        footer a:hover {
+            color: white !important;
+            text-decoration: underline !important;
+        }
+
+        footer .btn-icon {
+            background-color: var(--primary-700);
+            color: white;
+            transition: var(--transition-base);
+        }
+
+        footer .btn-icon:hover {
+            background-color: var(--primary-600) !important;
+            transform: translateY(-2px);
+        }
+
+        footer hr {
+            border-color: var(--primary-700);
+        }
+
+        footer .copyright {
+            color: var(--primary-300);
+        }
+
+        /* تنسيق الشعار المتجاوب */
+        .navbar-brand img,
+        .footer-logo img {
+            height: auto;
+            max-width: 180px;
+            width: 100%;
+        }
+
+        @media (max-width: 991.98px) {
+            .navbar-brand img,
+            .footer-logo img {
+                max-width: 150px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .section-py {
+                padding: 3rem 0;
+            }
+            
+            .hero-section {
+                padding: 4rem 0;
+            }
+            
+            .navbar-brand img,
+            .footer-logo img {
+                max-width: 120px;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .navbar-brand img,
+            .footer-logo img {
+                max-width: 100px;
+            }
+        }
+
+        
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://www2.0zz0.com/2025/05/19/00/684514557.png" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="about.html">من نحن</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="projects.html">المشاريع</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">اتصل بنا</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="login.html" class="btn btn-outline-primary me-2">تسجيل الدخول</a>
+                    <a href="register.html" class="btn btn-primary">حساب جديد</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- قسم الهيرو -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">منصة استثمارية بمعايير عالمية</h1>
+            <p class="lead mb-5">نحو مستقبل استثماري واعد نربط بين رؤى المستثمرين وطموحات رواد الأعمال</p>
+            <a href="#how-it-works" class="btn btn-light btn-lg px-4">اكتشف كيف نعمل</a>
+        </div>
+    </section>
+
+    <!-- قسم تعريف المنصة -->
+    <section class="section-py">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8aW52ZXN0bWVudHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                         alt="فريق العمل" 
+                         class="img-fluid rounded-3 shadow"
+                         loading="lazy">
+                </div>
+                <div class="col-lg-6">
+                    <span class="badge bg-primary-100 text-primary-800 mb-3">من نحن</span>
+                    <h2 class="fw-bold mb-4">تعريف <span class="text-primary">بمنصتنا</span></h2>
+                    <p class="lead text-muted mb-4">"ProConsult" منصة وساطة استثمارية رقمية متكاملة، تأسست عام 2025 بمبادرة من مجموعة من خبراء الاستثمار ورواد الأعمال، بهدف سد الفجوة بين المستثمرين والشركات الناشئة في العالم العربي.</p>
+                    <p class="text-muted mb-4">نقدم بيئة آمنة وشفافة تجمع بين الطرفين، مع توفير أدوات التحليل والمرافقة المهنية التي تضمن نجاح العلاقة الاستثمارية على المدى الطويل. نؤمن بأن الاستثمار الذكي هو الذي يجمع بين الفرصة المالية والرؤية الاستراتيجية.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#our-mission" class="btn btn-primary px-4">رسالتنا</a>
+                        <a href="#our-vision" class="btn btn-outline-primary px-4">رؤيتنا</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الرؤية والرسالة -->
+    <section class="section-py bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-5 mb-lg-0" id="our-mission">
+                    <div class="card h-100 border-0 shadow-sm feature-card">
+                        <div class="card-body p-5">
+                            <div class="icon-box mb-4">
+                                <i class="mdi mdi-bullseye-arrow"></i>
+                            </div>
+                            <h3 class="fw-bold mb-3">رسالتنا</h3>
+                            <p class="text-muted mb-0">تمكين المستثمرين من اكتشاف الفرص الواعدة ومساعدة الشركات الناشئة في الحصول على التمويل المناسب، عبر منصة موثوقة تعزز الشفافية وتقلل المخاطر من خلال التحليل المالي والمهني المتخصص.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" id="our-vision">
+                    <div class="card h-100 border-0 shadow-sm feature-card">
+                        <div class="card-body p-5">
+                            <div class="icon-box mb-4">
+                                <i class="mdi mdi-eye-outline"></i>
+                            </div>
+                            <h3 class="fw-bold mb-3">رؤيتنا</h3>
+                            <p class="text-muted mb-0">أن نكون المنصة الرائدة في الشرق الأوسط و الجزائر خاصة لوساطة الاستثمار في الشركات الناشئة، والجسر الموثوق الذي يربط بين رؤوس الأموال وفرص النمو، مما يساهم في تنمية الاقتصاد المعرفي ودفع عجلة الابتكار في المنطقة.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم مبدأ العمل -->
+    <section class="section-py" id="how-it-works">
+        <div class="container">
+            <div class="text-center mb-7">
+                <span class="badge bg-primary-100 text-primary-800 mb-3">كيف نعمل</span>
+                <h2 class="fw-bold mb-3">مبدأ عمل <span class="text-primary">المنصة</span></h2>
+                <p class="text-muted w-lg-50 mx-auto">نتبع منهجية واضحة ومحكمة لضمان نجاح العلاقة الاستثمارية بين الأطراف</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="timeline">
+                        <!-- الخطوة 1 -->
+                        <div class="timeline-item ps-4">
+                            <div class="timeline-dot"></div>
+                            <div class="card border-0 shadow-sm feature-card">
+                                <div class="card-body p-4 p-md-5">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="icon-box me-4 flex-shrink-0">
+                                            <i class="mdi mdi-magnify"></i>
+                                        </div>
+                                        <h4 class="fw-bold mb-0">الاكتشاف والتحليل</h4>
+                                    </div>
+                                    <p class="text-muted mb-0">تقوم المنصة بجذب المشاريع الواعدة وتقييمها من خلال فريق من الخبراء وفق معايير دقيقة تشمل: الجدوى الفنية، قوة الفريق، إمكانية التوسع، والقدرة على تحقيق عوائد استثمارية مجزية.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- الخطوة 2 -->
+                        <div class="timeline-item ps-4">
+                            <div class="timeline-dot"></div>
+                            <div class="card border-0 shadow-sm feature-card">
+                                <div class="card-body p-4 p-md-5">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="icon-box me-4 flex-shrink-0">
+                                            <i class="mdi mdi-handshake"></i>
+                                        </div>
+                                        <h4 class="fw-bold mb-0">التوفيق والتوصية</h4>
+                                    </div>
+                                    <p class="text-muted mb-0">بناءً على ملف المستثمر وتفضيلاته، نقوم بمطابقة المشاريع المناسبة معه وتقديم توصيات استثمارية مدروسة تشمل تحليل المخاطر والعوائد المتوقعة، مع توفير كافة المعلومات اللازمة لاتخاذ القرار.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- الخطوة 3 -->
+                        <div class="timeline-item ps-4">
+                            <div class="timeline-dot"></div>
+                            <div class="card border-0 shadow-sm feature-card">
+                                <div class="card-body p-4 p-md-5">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="icon-box me-4 flex-shrink-0">
+                                            <i class="mdi mdi-file-document-outline"></i>
+                                        </div>
+                                        <h4 class="fw-bold mb-0">إبرام الصفقات</h4>
+                                    </div>
+                                    <p class="text-muted mb-0">نقدم الدعم القانوني  لإتمام الصفقات بشكل آمن، مع توفير عقود استثمارية معيارية قابلة للتخصيص حسب طبيعة كل صفقة، وضمان حقوق جميع الأطراف وفق أفضل الممارسات العالمية.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- الخطوة 4 -->
+                        <div class="timeline-item ps-4">
+                            <div class="timeline-dot"></div>
+                            <div class="card border-0 shadow-sm feature-card">
+                                <div class="card-body p-4 p-md-5">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="icon-box me-4 flex-shrink-0">
+                                            <i class="mdi mdi-chart-line"></i>
+                                        </div>
+                                        <h4 class="fw-bold mb-0">المتابعة والدعم</h4>
+                                    </div>
+                                    <p class="text-muted mb-0">نواصل مرافقة الأطراف بعد إتمام الصفقة من خلال توفير تقارير دورية عن أداء المشروع، حل النزاعات إن وجدت، وتقديم الاستشارات الاستراتيجية لضمان تحقيق النمو المستدام للشركة والعوائد المجزية للمستثمر.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم مميزات المنصة -->
+    <section class="section-py bg-light">
+        <div class="container">
+            <div class="text-center mb-7">
+                <span class="badge bg-primary-100 text-primary-800 mb-3">لماذا نحن</span>
+                <h2 class="fw-bold mb-3">مميزات <span class="text-primary">المنصة</span></h2>
+                <p class="text-muted w-lg-50 mx-auto">نقدم مجموعة من المميزات الفريدة التي تجعلنا الخيار الأمثل للاستثمار في الشركات الناشئة</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card border-0 shadow-sm feature-card h-100">
+                        <div class="card-body p-5">
+                            <div class="icon-box mb-4">
+                                <i class="mdi mdi-shield-check-outline"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">بيئة آمنة</h4>
+                            <p class="text-muted mb-0">نضمن لك بيئة استثمارية آمنة مع التحقق من جميع الأطراف وضمان حقوق المستثمرين من خلال تقنيات متقدمة في التحقق والتدقيق.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card border-0 shadow-sm feature-card h-100">
+                        <div class="card-body p-5">
+                            <div class="icon-box mb-4">
+                                <i class="mdi mdi-chart-bar"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">تحليلات متعمقة</h4>
+                            <p class="text-muted mb-0">نقدم أدوات تحليلية متكاملة تساعدك في اتخاذ قرارات استثمارية مدروسة بناءً على بيانات دقيقة ومؤشرات أداء واضحة.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card border-0 shadow-sm feature-card h-100">
+                        <div class="card-body p-5">
+                            <div class="icon-box mb-4">
+                                <i class="mdi mdi-account-group"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">شبكة علاقات واسعة</h4>
+                            <p class="text-muted mb-0">إمكانية الوصول إلى شبكة واسعة من المستثمرين والشركات الناشئة المختارة بعناية في مختلف القطاعات والمراحل الاستثمارية.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card border-0 shadow-sm feature-card h-100">
+                        <div class="card-body p-5">
+                            <div class="icon-box mb-4">
+                                <i class="mdi mdi-file-document-multiple"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">وثائق قانونية معيارية</h4>
+                            <p class="text-muted mb-0">نوفر مجموعة من العقود والوثائق القانونية المعيارية التي تغطي مختلف أنواع الصفقات الاستثمارية، مع إمكانية التخصيص.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card border-0 shadow-sm feature-card h-100">
+                        <div class="card-body p-5">
+                            <div class="icon-box mb-4">
+                                <i class="mdi mdi-head-cog"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">استشارات متخصصة</h4>
+                            <p class="text-muted mb-0">فريق من الخبراء المتخصصين في التمويل والاستثمار وريادة الأعمال جاهز لتقديم الاستشارات والنصح عند الحاجة.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card border-0 shadow-sm feature-card h-100">
+                        <div class="card-body p-5">
+                            <div class="icon-box mb-4">
+                                <i class="mdi mdi-finance"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">تتبع الأداء</h4>
+                            <p class="text-muted mb-0">نظام متكامل لمتابعة أداء استثماراتك وتقديم تقارير دورية مفصلة تساعدك في اتخاذ القرارات المستقبلية.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم دعوة للعمل -->
+    <section class="section-py bg-primary text-white">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-4">جاهز لبدء رحلتك الاستثمارية؟</h2>
+            <p class="lead mb-5">سجل الآن في ProConsult واحصل على فرصة للتواصل مع أفضل المستثمرين أو الشركات الناشئة في المنطقة</p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <a href="register.html?type=investor" class="btn btn-light btn-lg px-5">
+                    <i class="mdi mdi-account-tie me-2"></i> تسجيل مستثمر
+                </a>
+                <a href="register.html?type=startup" class="btn btn-outline-light btn-lg px-5">
+                    <i class="mdi mdi-office-building me-2"></i> تسجيل شركة
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- تذييل الصفحة المعدل -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="footer-logo mb-4">
+                        <img src="https://www2.0zz0.com/2025/05/19/00/684514557.png" alt=" ProConsult">
+                    </div>
+                    <p class="mb-4" style="color: var(--primary-200);">منصة وساطة استثمارية متكاملة تهدف إلى ربط المستثمرين بالشركات الناشئة بطريقة آمنة وفعالة</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="btn btn-icon rounded-circle" style="background-color: var(--primary-700); color: white;">
+                            <i class="mdi mdi-facebook"></i>
+                        </a>
+                        <a href="#" class="btn btn-icon rounded-circle" style="background-color: var(--primary-700); color: white;">
+                            <i class="mdi mdi-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-icon rounded-circle" style="background-color: var(--primary-700); color: white;">
+                            <i class="mdi mdi-linkedin"></i>
+                        </a>
+                        <a href="#" class="btn btn-icon rounded-circle" style="background-color: var(--primary-700); color: white;">
+                            <i class="mdi mdi-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-md-3 col-6">
+                            <h5 class="fw-bold mb-4">الشركة</h5>
+                            <ul class="list-unstyled d-flex flex-wrap gap-2">
+                                <li><a href="about.html" class="text-decoration-none" style="color: var(--primary-200);">من نحن</a></li>
+                                <li><a href="team.html" class="text-decoration-none" style="color: var(--primary-200);">الفريق</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="col-md-3 col-6">
+                            <h5 class="fw-bold mb-4">الموارد</h5>
+                            <ul class="list-unstyled d-flex flex-wrap gap-2">
+                                <li><a href="#" class="text-decoration-none" style="color: var(--primary-200);">الأسئلة الشائعة</a></li>
+
+                            </ul>
+                        </div>
+                        
+                        <div class="col-md-3 col-6">
+                            <h5 class="fw-bold mb-4">الشروط</h5>
+                            <ul class="list-unstyled d-flex flex-wrap gap-2">
+                                <li><a href="privacy-policy.html" class="text-decoration-none" style="color: var(--primary-200);">سياسة الخصوصية</a></li>
+                                <li><a href="faq.html" class="text-decoration-none" style="color: var(--primary-200);">الأسئلة الشائعة/a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="col-md-3 col-6">
+                            <h5 class="fw-bold mb-4">اتصل بنا</h5>
+                            <ul class="list-unstyled d-flex flex-wrap gap-2">
+                                <li><a href="support.html" class="text-decoration-none" style="color: var(--primary-200);">الدعم الفني</a></li>
+                                <li><a href="support.html" class="text-decoration-none" style="color: var(--primary-200);">تواصل معنا</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="my-5" style="border-color: var(--primary-700);">
+            <div class="text-center" style="color: var(--primary-300);">
+                <p class="mb-0">© 2025 ProConsult. جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
+</body>
+</html>

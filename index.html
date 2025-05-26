@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
+    <meta name="description" content="منصة وساطة استثمارية متكاملة تربط المستثمرين بالشركات الناشئة باحترافية وأمان">
+    <title>استثمر بذكاء | المنصة الرائدة للاستثمار في الشركات الناشئة</title>
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" as="style">
+    <link rel="preload" href="assets/css/main.css" as="style">
+    <link rel="preload" href="assets/js/main.js" as="script">
+    
+    <!-- Inline Critical CSS -->
+    <style>
+        /* النظام اللوني المتكامل */
+        :root {
+            --primary-50: #f0f4ff;
+            --primary-100: #dbe8ff;
+            --primary-200: #b8d1ff;
+            --primary-300: #85adff;
+            --primary-400: #527bff;
+            --primary-500: #4361ee;
+            --primary-600: #3a4fd9;
+            --primary-700: #2f3fb5;
+            --primary-800: #253194;
+            --primary-900: #1a237e;
+            
+            --secondary-500: #3f37c9;
+            --success-500: #4cc9f0;
+            --danger-500: #f72585;
+            --warning-500: #f8961e;
+            --dark-500: #212529;
+            --light-500: #f8f9fa;
+            --gray-500: #6c757d;
+            
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.16);
+            
+            --border-radius-sm: 8px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 16px;
+            
+            --transition-base: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition-fade: opacity 0.15s linear;
+            --transition-collapse: height 0.35s ease;
+        }
+
+        /* Reset and Base Styles */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+
+        body {
+            font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-500);
+            background-color: #f8fafc;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* Typography Scale */
+        h1, .h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+        h2, .h2 { font-size: clamp(1.75rem, 4vw, 2.8rem); }
+        h3, .h3 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); }
+        h4, .h4 { font-size: clamp(1.25rem, 3vw, 1.8rem); }
+        h5, .h5 { font-size: clamp(1.1rem, 2.5vw, 1.5rem); }
+        h6, .h6 { font-size: clamp(1rem, 2vw, 1.25rem); }
+
+        /* Layout System */
+        .container {
+            width: 100%;
+            padding-right: max(1.5rem, calc((100% - 1200px) / 2));
+            padding-left: max(1.5rem, calc((100% - 1200px) / 2));
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .section-py {
+            padding-top: 6rem;
+            padding-bottom: 6rem;
+        }
+
+        @media (max-width: 991.98px) {
+            .section-py {
+                padding-top: 4rem;
+                padding-bottom: 4rem;
+            }
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-base);
+            padding: 1.25rem 0;
+        }
+
+        .navbar.scrolled {
+            padding: 0.75rem 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            transition: var(--transition-base);
+        }
+
+        .navbar-brand img {
+            transition: var(--transition-base);
+        }
+
+        .navbar.scrolled .navbar-brand img {
+            height: 32px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            padding-top: 8rem;
+            padding-bottom: 6rem;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-image-container {
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .hero-image {
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-lg);
+            transform-style: preserve-3d;
+            transition: var(--transition-base);
+        }
+
+        .hero-image:hover {
+            transform: translateY(-5px) rotateX(5deg) rotateY(-2deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Floating Cards */
+        .floating-card {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            z-index: 3;
+            transition: var(--transition-base);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-card i {
+            font-size: 1.5rem;
+            margin-left: 0.75rem;
+        }
+
+        .floating-card:nth-child(1) {
+            top: 10%;
+            right: -5%;
+            animation-delay: 0s;
+        }
+
+        .floating-card:nth-child(2) {
+            bottom: 15%;
+            left: -5%;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            position: relative;
+            overflow: hidden;
+            border: none;
+            border-radius: var(--border-radius-lg);
+            transition: var(--transition-base);
+            height: 100%;
+            background-color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: linear-gradient(to bottom, var(--primary-500), var(--primary-300));
+            transition: var(--transition-base);
+        }
+
+        .feature-card:hover::before {
+            height: 100%;
+        }
+
+        /* Avatar Group Styles */
+.avatar-group {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid white;
+    margin-right: -12px;
+    position: relative;
+    transition: var(--transition-base);
+    box-shadow: var(--shadow-sm);
+    background-color: var(--primary-100);
+}
+
+.avatar:hover {
+    transform: translateY(-3px);
+    z-index: 1;
+    box-shadow: var(--shadow-md);
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 600;
+    color: var(--primary-800);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767.98px) {
+    .avatar {
+        width: 40px;
+        height: 40px;
+        margin-right: -10px;
+    }
+}
+
+        /* Project Cards */
+        .project-card {
+            border: none;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            transition: var(--transition-base);
+            box-shadow: var(--shadow-sm);
+            height: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .project-card .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            transition: var(--transition-base);
+        }
+
+        .project-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        /* Testimonial Cards */
+        .testimonial-card {
+            position: relative;
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            transition: var(--transition-base);
+            height: 100%;
+        }
+
+        .testimonial-card::before {
+            content: '\201C';
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 5rem;
+            line-height: 1;
+            color: rgba(255, 255, 255, 0.1);
+            font-family: serif;
+        }
+
+        /* Floating Buttons */
+        .floating-buttons {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 1020;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .floating-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .floating-btn::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0;
+            transition: var(--transition-base);
+        }
+
+        .floating-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .floating-btn:hover::after {
+            opacity: 1;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 767.98px) {
+            .hero-section {
+                padding-top: 6rem;
+                padding-bottom: 4rem;
+            }
+            
+            .floating-buttons {
+                bottom: 1rem;
+                left: 1rem;
+            }
+            
+            .floating-btn {
+                width: 48px;
+                height: 48px;
+            }
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #121212;
+                color: #f8f9fa;
+            }
+            
+            .navbar {
+                background-color: rgba(30, 30, 30, 0.98);
+            }
+            
+            .feature-card,
+            .project-card {
+                background-color: #1e1e1e;
+            }
+        }
+        /* تأكيد ظهور صور العلامات التجارية */
+.brands-section img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.brands-section img:hover {
+    transform: scale(1.05);
+}
+
+/* تأكيد مساحة القسم */
+.py-5.bg-light {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+    background-color: #f8f9fa !important;
+}
+    </style>
+    
+    <!-- Deferred Non-Critical CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css">
+    </noscript>
+</head>
+<body>
+    <!-- شريط التنقل الذكي -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://www2.0zz0.com/2025/05/19/00/684514557.png" alt="" width="200" height="150">
+                
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="mdi mdi-menu"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home" data-scroll>الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features" data-scroll>المميزات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects" data-scroll>المشاريع</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials" data-scroll>آراء العملاء</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center gap-3">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="mdi mdi-earth"></i> العربية
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                            <li><a class="dropdown-item" href="#">English</a></li>
+                            <li><a class="dropdown-item" href="#">Français</a></li>
+                        </ul>
+                    </div>
+                    <a href="login.html" class="btn btn-outline-primary">تسجيل الدخول</a>
+                    <a href="register.html" class="btn btn-primary">حساب جديد</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- قسم الهيرو المتكامل -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 order-lg-1 order-2 mt-5 mt-lg-0">
+                    <div class="hero-content pe-lg-5">
+                        <h1 class="fw-bold mb-4">نحو<span class="text-primary">إستثمار </span> واع نربط الرؤية بالفرصة وبخطى إحترافية.</h1>
+                        <p class="lead text-muted mb-5">نوفّر بيئة موثوقة ومُمكّنة تجمع بين رؤى المستثمرين وطموحات رواد الأعمال، عبر منظومة من الاستشارات المتخصصة والمرافقة المهنية المستمرة لكلا الطرفين على امتداد مسار التعاون. وتسعى المنصة إلى ردم الفجوة بين الأطراف الاستثمارية من خلال تعزيز التفاهم، وتيسير بناء شراكات مثمرة تقوم على الشفافية والكفاءة والرؤية المشتركة نحو نمو مستدام وفعّال</p>
+                        
+                        <div class="d-flex flex-wrap gap-3 mb-5">
+                            <a href="register.html?type=investor" class="btn btn-primary btn-lg px-4 py-3">
+                                <i class="mdi mdi-account-tie me-2"></i> أنا مستثمر
+                            </a>
+                            <a href="register.html?type=startup" class="btn btn-outline-primary btn-lg px-4 py-3">
+                                <i class="mdi mdi-office-building me-2"></i> شركة ناشئة
+                            </a>
+                        </div>
+                        
+                        <div class="d-flex align-items-center">
+                            <div class="avatar-group me-4">
+                                <div class="avatar">
+                                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YXJhYmljJTIwbWFufGVufDB8fDB8fHww&auto=format&fit=crop&w=80&h=80&q=80&fit=crop&crop=faces" 
+                                         alt="مستثمر" 
+                                         loading="lazy">
+                                </div>
+                                <div class="avatar">
+                                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXJhYmljJTIwd29tYW58ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=80&h=80&q=80&fit=crop&crop=faces" 
+                                         alt="مستثمر" 
+                                         loading="lazy">
+                                </div>
+                                <div class="avatar">
+                                    <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXJhYmljJTIwbWFufGVufDB8fDB8fHww&auto=format&fit=crop&w=80&h=80&q=80&fit=crop&crop=faces" 
+                                         alt="مستثمر" 
+                                         loading="lazy">
+                                </div>
+                                <div class="avatar">
+                                    <span>+27</span>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="mb-1 fw-medium">انضم إلى أكثر من <span class="text-primary">500</span> مستثمر</p>
+                                <div class="rating text-warning small">
+                                    <i class="mdi mdi-star"></i>
+                                    <i class="mdi mdi-star"></i>
+                                    <i class="mdi mdi-star"></i>
+                                    <i class="mdi mdi-star"></i>
+                                    <i class="mdi mdi-star-half"></i>
+                                    <span class="text-muted ms-1">4.7 (1,234 تقييم)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 order-lg-2 order-1">
+                    <div class="hero-image-container">
+                        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8aW52ZXN0bWVudHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                             alt="اجتماع استثماري" 
+                             class="hero-image img-fluid"
+                             loading="lazy">
+                        
+                        <div class="floating-card bg-primary text-white">
+                            <i class="mdi mdi-trending-up"></i>
+                            <div>
+                                <h6 class="mb-0">+$5M</h6>
+                                <small>تم استثمارها</small>
+                            </div>
+                        </div>
+                        
+                        <div class="floating-card bg-success text-white">
+                            <i class="mdi mdi-check-all"></i>
+                            <div>
+                                <h6 class="mb-0">+120</h6>
+                                <small>صفقة ناجحة</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <!-- قسم العلامات التجارية الجزائرية -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h3 class="text-center mb-5">شركاؤنا في الجزائر</h3>
+        <div class="row g-4 align-items-center justify-content-center">
+            <!-- اتصالات الجزائر -->
+            <div class="col-6 col-md-3 col-lg-2">
+                <a href="https://www.algerietelecom.dz" target="_blank" class="d-block text-center">
+                    <img src="https://www.algerietelecom.dz/assets/front/img/logo.svg" 
+                         alt="Mobilis اتصالات الجزائر"
+                         class="img-fluid brand-logo"
+                         loading="lazy"
+                         style="max-height: 50px;">
+                </a>
+            </div>
+            
+            <!-- سوناطراك -->
+            <div class="col-6 col-md-3 col-lg-2">
+                <a href="https://www.sonatrach.com" target="_blank" class="d-block text-center">
+                    <img src="https://sonatrach.com/img/header/sonatrach.png" 
+                         alt="سوناطراك"
+                         class="img-fluid brand-logo"
+                         
+                         style="max-height: 50px;">
+                </a>
+            </div>
+            
+            <!-- كوكا كولا الجزائر -->
+            <div class="col-6 col-md-3 col-lg-2">
+                <a href="https://www.coca-cola.dz" target="_blank" class="d-block text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Coca-Cola_logo.svg/1280px-Coca-Cola_logo.svg.png" 
+                         alt="كوكا كولا الجزائر"
+                         class="img-fluid brand-logo"
+                         
+                         style="max-height: 50px;">
+                </a>
+            </div>
+            
+            <!-- Cevital -->
+            <div class="col-6 col-md-3 col-lg-2">
+                <a href="https://www.cevital.com" target="_blank" class="d-block text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Cevital_logo_2016.svg/768px-Cevital_logo_2016.svg.png" 
+                         alt="Cevital"
+                         class="img-fluid brand-logo"
+                         loading="lazy"
+                         style="max-height: 50px;">
+                </a>
+            </div>
+            
+            <!-- نايس كافيه -->
+            <div class="col-6 col-md-3 col-lg-2">
+                <a href="https://www.nicecafe.dz" target="_blank" class="d-block text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Nescaf%C3%A9_wordmark.svg/750px-Nescaf%C3%A9_wordmark.svg.png" 
+                         alt="نايس كافيه"
+                         class="img-fluid brand-logo"
+                         loading="lazy"
+                         style="max-height: 50px;">
+                </a>
+            </div>
+            
+            <!-- Djezzy -->
+            <div class="col-6 col-md-3 col-lg-2">
+                <a href="https://mobilis.dz/" target="_blank" class="d-block text-center">
+                    <img src="https://mobilis.dz/storage/895/logo_mobilis_arabe.png" 
+                         altDjezzy"
+                         class="img-fluid brand-logo"
+                         loading="lazy"
+                         style="max-height: 50px;">
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- قسم المميزات المتكامل -->
+    <section id="features" class="section-py">
+        <div class="container">
+            <div class="text-center mb-7">
+                <span class="badge bg-primary-100 text-primary-800 mb-3">لماذا نختارنا؟</span>
+                <h2 class="fw-bold mb-3">حلول استثمارية <span class="text-primary">مبتكرة</span></h2>
+                <p class="text-muted w-lg-50 mx-auto">نقدم مجموعة من المميزات الفريدة التي تجعلنا المنصة المفضلة للمستثمرين ورواد الأعمال</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-xl-4 col-md-6">
+                    <div class="feature-card p-5">
+                        <div class="icon-box bg-primary-100 text-primary-500 mb-4">
+                            <i class="mdi mdi-shield-check-outline"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">بيئة آمنة</h4>
+                        <p class="text-muted mb-4">نضمن لك بيئة استثمارية آمنة مع التحقق من جميع الأطراف وضمان حقوق المستثمرين من خلال تقنيات متقدمة</p>
+                        <a href="#" class="text-primary fw-medium d-flex align-items-center">
+                            اكتشف المزيد
+                            <i class="mdi mdi-arrow-left ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-xl-4 col-md-6">
+                    <div class="feature-card p-5">
+                        <div class="icon-box bg-primary-100 text-primary-500 mb-4">
+                            <i class="mdi mdi-chart-line"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">تحليلات متقدمة</h4>
+                        <p class="text-muted mb-4">نقدم أدوات تحليلية متكاملة تساعدك في اتخاذ قرارات استثمارية مدروسة بناءً على بيانات دقيقة</p>
+                        <a href="#" class="text-primary fw-medium d-flex align-items-center">
+                            اكتشف المزيد
+                            <i class="mdi mdi-arrow-left ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-xl-4 col-md-6">
+                    <div class="feature-card p-5">
+                        <div class="icon-box bg-primary-100 text-primary-500 mb-4">
+                            <i class="mdi mdi-handshake"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">وساطة احترافية</h4>
+                        <p class="text-muted mb-4">فريق متخصص من الخبراء يساعدك في إتمام الصفقات بكل سلاسة وشفافية مع ضمان حقوق جميع الأطراف</p>
+                        <a href="#" class="text-primary fw-medium d-flex align-items-center">
+                            اكتشف المزيد
+                            <i class="mdi mdi-arrow-left ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المشاريع المميزة -->
+    <section id="projects" class="section-py bg-light">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-6">
+                <div class="mb-4 mb-md-0">
+                    <span class="badge bg-primary-100 text-primary-800 mb-2">اكتشف الفرص</span>
+                    <h2 class="fw-bold mb-0">أحدث <span class="text-primary">المشاريع</span> المضافة</h2>
+                </div>
+                <div class="d-flex gap-3">
+                    <button class="btn btn-outline-primary px-4">عرض الكل</button>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="mdi mdi-filter-outline me-2"></i> تصفية
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+                            <li><a class="dropdown-item" href="#">الكل</a></li>
+                            <li><a class="dropdown-item" href="#">التكنولوجيا</a></li>
+                            <li><a class="dropdown-item" href="#">الصحة</a></li>
+                            <li><a class="dropdown-item" href="#">التعليم</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="project-card card">
+                        <div class="position-relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c3RhcnR1cHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                 class="card-img-top" 
+                                 alt="مشروع تعليمي"
+                                 loading="lazy">
+                            <span class="badge bg-success position-absolute top-0 start-0 m-3">جديد</span>
+                            <div class="card-actions position-absolute top-0 end-0 m-3">
+                                <button class="btn btn-light btn-icon rounded-circle" data-bs-toggle="tooltip" data-bs-placement="left" title="حفظ للمفضلة">
+                                    <i class="mdi mdi-heart-outline"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <span class="badge bg-primary-100 text-primary-800 mb-2">التعليم</span>
+                                    <h5 class="card-title fw-bold">منصة تعليمية ذكية</h5>
+                                </div>
+                                <div class="text-end">
+                                    <div class="rating text-warning mb-1">
+                                        <i class="mdi mdi-star"></i>
+                                        <i class="mdi mdi-star"></i>
+                                        <i class="mdi mdi-star"></i>
+                                        <i class="mdi mdi-star"></i>
+                                        <i class="mdi mdi-star-half"></i>
+                                    </div>
+                                    <small class="text-muted">12 تقييم</small>
+                                </div>
+                            </div>
+                            <p class="card-text text-muted mb-4">منصة تعليمية تعتمد على الذكاء الاصطناعي لتقديم تجربة تعلم شخصية لكل طالب بناءً على مستوى فهمه وسرعة تعلمه</p>
+                            
+                            <div class="progress mb-3" style="height: 8px;">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 65%;"></div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0 fw-bold text-primary">$50,000</h6>
+                                    <small class="text-muted">الحد الأدنى للاستثمار</small>
+                                </div>
+                                <button class="btn btn-primary btn-sm px-3" data-bs-toggle="modal" data-bs-target="#projectModal">تفاصيل المشروع</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- تكرار بطاقات المشاريع -->
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="#" class="btn btn-outline-primary px-5 py-3">
+                    <i class="mdi mdi-eye-outline me-2"></i> عرض المزيد من المشاريع
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الإحصائيات -->
+    <section class="section-py bg-primary text-white position-relative">
+        <div class="container position-relative">
+            <div class="row g-4">
+                <div class="col-md-3 col-sm-6">
+                    <div class="text-center">
+                        <h2 class="display-4 fw-bold mb-2"><span class="counter" data-target="250">0</span>+</h2>
+                        <p class="mb-0">شركة ناشئة</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="text-center">
+                        <h2 class="display-4 fw-bold mb-2"><span class="counter" data-target="500">0</span>+</h2>
+                        <p class="mb-0">مستثمر نشط</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="text-center">
+                        <h2 class="display-4 fw-bold mb-2">$<span class="counter" data-target="50">0</span>M+</h2>
+                        <p class="mb-0">تم استثمارها</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="text-center">
+                        <h2 class="display-4 fw-bold mb-2"><span class="counter" data-target="120">0</span>+</h2>
+                        <p class="mb-0">صفقة ناجحة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10" style="background: url('assets/images/pattern.svg') repeat;"></div>
+    </section>
+
+    <!-- قسم آراء العملاء -->
+    <section id="testimonials" class="section-py">
+        <div class="container">
+            <div class="text-center mb-7">
+                <span class="badge bg-primary-100 text-primary-800 mb-3">آراء العملاء</span>
+                <h2 class="fw-bold mb-3">ما يقولونه <span class="text-primary">عنّا</span></h2>
+                <p class="text-muted w-lg-50 mx-auto">استمع إلى تجارب عملائنا الذين استفادوا من خدماتنا وحققوا نجاحات استثمارية مميزة</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="testimonial-card bg-white p-5 rounded-4 h-100 shadow-sm">
+                        <div class="rating text-warning mb-3">
+                            <i class="mdi mdi-star"></i>
+                            <i class="mdi mdi-star"></i>
+                            <i class="mdi mdi-star"></i>
+                            <i class="mdi mdi-star"></i>
+                            <i class="mdi mdi-star"></i>
+                        </div>
+                        <p class="mb-4">"لقد ساعدتني المنصة في العثور على مشروع واعد واستثمار أموالي بطريقة آمنة ومربحة. فريق العمل محترف جدًا ويقدم الدعم الكامل."</p>
+                        <div class="d-flex align-items-center">
+                            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXJhYmljJTIwbWFufGVufDB8fDB8fHww&auto=format&fit=crop&w=80&h=80&q=80&fit=crop&crop=faces" 
+                                 alt="عميل" 
+                                 class="rounded-circle me-3" 
+                                 width="60"
+                                 loading="lazy">
+                            <div>
+                                <h6 class="mb-0 fw-bold">أحمد محمد</h6>
+                                <small class="text-muted">مستثمر منذ 2020</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- تكرار بطاقات آراء العملاء -->
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الأسئلة الشائعة -->
+    <section class="section-py bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmFxfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=80" 
+                         alt="أسئلة شائعة" 
+                         class="img-fluid rounded-4 shadow"
+                         loading="lazy">
+                </div>
+                
+                <div class="col-lg-6">
+                    <span class="badge bg-primary-100 text-primary-800 mb-3">الدعم والمساعدة</span>
+                    <h2 class="fw-bold mb-5">أسئلة <span class="text-primary">متكررة</span></h2>
+                    
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden shadow-sm">
+                            <h3 class="accordion-header" id="headingOne">
+                                <button class="accordion-button bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                    كيف يمكنني التسجيل في المنصة؟
+                                </button>
+                            </h3>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    يمكنك التسجيل عن طريق الضغط على زر "حساب جديد" في أعلى الصفحة واختيار نوع الحساب (مستثمر أو شركة ناشئة) ثم تعبئة البيانات المطلوبة. عملية التسجيل تستغرق أقل من 5 دقائق.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- تكرار عناصر الأسئلة -->
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="#" class="btn btn-outline-primary">
+                            <i class="mdi mdi-help-circle-outline me-2"></i> المزيد من الأسئلة
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم دعوة للعمل -->
+    <section id="contact" class="section-py bg-dark text-white position-relative">
+        <div class="container position-relative">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2 class="fw-bold mb-4">جاهز لبدء رحلتك الاستثمارية؟</h2>
+                    <p class="lead mb-5">سجل الآن واحصل على فرصة للتواصل مع أفضل المستثمرين أو الشركات الناشئة في المنطقة</p>
+                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                        <a href="register.html?type=investor" class="btn btn-light btn-lg px-5 py-3">
+                            <i class="mdi mdi-account-tie me-2"></i> تسجيل مستثمر
+                        </a>
+                        <a href="register.html?type=startup" class="btn btn-outline-light btn-lg px-5 py-3">
+                            <i class="mdi mdi-office-building me-2"></i> تسجيل شركة
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10" style="background: url('assets/images/pattern-dark.svg') repeat;"></div>
+    </section>
+
+    <!-- تذييل الصفحة -->
+    <footer class="bg-darker text-white pt-7 pb-4">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <a class="d-flex align-items-center mb-4" href="#">
+                        <img src="https://www2.0zz0.com/2025/05/19/00/684514557.png" alt="" width="200" class="me-2" loading="lazy">
+                    </a>
+                    <p class="text-muted mb-4">منصة وساطة استثمارية متكاملة تهدف إلى ربط المستثمرين بالشركات الناشئة بطريقة آمنة وفعالة</p>
+                    
+                    <div class="d-flex gap-3 mb-4">
+                        <a href="#" class="btn btn-icon btn-outline-light rounded-circle">
+                            <i class="mdi mdi-facebook"></i>
+                        </a>
+                        <a href="#" class="btn btn-icon btn-outline-light rounded-circle">
+                            <i class="mdi mdi-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-icon btn-outline-light rounded-circle">
+                            <i class="mdi mdi-linkedin"></i>
+                        </a>
+                        <a href="#" class="btn btn-icon btn-outline-light rounded-circle">
+                            <i class="mdi mdi-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="fw-bold mb-4">الشركة</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><a href="about.html" class="text-muted">من نحن</a></li>
+                        <li class="mb-3"><a href="team.html" class="text-muted">الفريق</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="fw-bold mb-4">الموارد</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><a href="faq.html" class="text-muted">الأسئلة الشائعة</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="fw-bold mb-4">الشروط</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><a href="privacy-policy.html" class="text-muted">سياسة الخصوصيةa></li>
+                        <li class="mb-3"><a href="faq.html" class="text-muted">الأسئلة القانونية</a></li>
+                       
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="fw-bold mb-4">اتصل بنا</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><a href="support.html" class="text-muted">الدعم الفني</a></li>
+
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="my-5 border-gray-700">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <p class="text-muted mb-0">© 2023 استثمر بذكاء. جميع الحقوق محفوظة</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="d-flex justify-content-center justify-content-md-end gap-3">
+                        <a href="privacy-policy.html" class="text-muted small">سياسة الخصوصية</a>
+                        <a href="#" class="text-muted small">إعدادات ملفات الارتباط</a>
+                      >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- الأزرار العائمة -->
+    <div class="floating-buttons">
+        <button class="floating-btn bg-primary text-white" id="chatButton" data-bs-toggle="tooltip" data-bs-placement="left" title="الدردشة مع الدعم">
+            <i class="mdi mdi-chat-outline"></i>
+        </button>
+        <button class="floating-btn bg-dark text-white" id="backToTop" data-bs-toggle="tooltip" data-bs-placement="left" title="العودة للأعلى">
+            <i class="mdi mdi-arrow-up"></i>
+        </button>
+    </div>
+
+    <!-- نموذج مشروع (Modal) -->
+    <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="projectModalLabel">تفاصيل المشروع</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- محتوى النموذج -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">إغلاق</button>
+                    <button type="button" class="btn btn-primary">التواصل مع صاحب المشروع</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inline JavaScript -->
+    <script>
+        /**
+         * تهيئة الصفحة عند التحميل
+         */
+        document.addEventListener('DOMContentLoaded', function() {
+            // إدارة شريط التنقل عند التمرير
+            manageNavbarScroll();
+            
+            // تهيئة التمرير السلس
+            initSmoothScroll();
+            
+            // تهيئة العدادات
+            initCounters();
+            
+            // تهيئة الأزرار العائمة
+            initFloatingButtons();
+            
+            // تهيئة أدوات التلميح
+            initTooltips();
+            
+            // تهيئة مكتبات الطرف الثالث عند الحاجة
+            loadThirdPartyLibs();
+            
+            // إدارة تحميل الصور
+            manageImageLoading();
+        });
+        
+        /**
+         * إدارة شريط التنقل عند التمرير
+         */
+        function manageNavbarScroll() {
+            const navbar = document.querySelector('.navbar');
+            const scrollThreshold = 100;
+            
+            function updateNavbar() {
+                if (window.scrollY > scrollThreshold) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }
+            
+            window.addEventListener('scroll', updateNavbar);
+            updateNavbar(); // التهيئة الأولية
+        }
+        
+        /**
+         * تهيئة التمرير السلس
+         */
+        function initSmoothScroll() {
+            document.querySelectorAll('a[data-scroll]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                        const offsetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // إغلاق القائمة المتنقلة إذا كانت مفتوحة
+                        const navbarCollapse = document.querySelector('.navbar-collapse');
+                        if (navbarCollapse.classList.contains('show')) {
+                            navbarCollapse.classList.remove('show');
+                        }
+                    }
+                });
+            });
+        }
+        
+        /**
+         * تهيئة العدادات
+         */
+        function initCounters() {
+            const counters = document.querySelectorAll('.counter');
+            const speed = 200;
+            
+            function animateCounters() {
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const increment = target / speed;
+                    
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + increment);
+                        setTimeout(animateCounters, 1);
+                    } else {
+                        counter.innerText = target;
+                    }
+                });
+            }
+            
+            // تشغيل العدادات عند ظهورها في الشاشة
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            counters.forEach(counter => {
+                observer.observe(counter);
+            });
+        }
+        
+        /**
+         * تهيئة الأزرار العائمة
+         */
+        function initFloatingButtons() {
+            const backToTop = document.getElementById('backToTop');
+            const chatButton = document.getElementById('chatButton');
+            
+            // زر العودة للأعلى
+            if (backToTop) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 300) {
+                        backToTop.style.opacity = '1';
+                        backToTop.style.visibility = 'visible';
+                    } else {
+                        backToTop.style.opacity = '0';
+                        backToTop.style.visibility = 'hidden';
+                    }
+                });
+                
+                backToTop.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+            
+            // زر الدردشة
+            if (chatButton) {
+                chatButton.addEventListener('click', function() {
+                    // يمكنك إضافة وظيفة الدردشة هنا
+                    alert('مرحبًا! كيف يمكننا مساعدتك؟');
+                });
+            }
+        }
+        
+        /**
+         * تهيئة أدوات التلميح
+         */
+        function initTooltips() {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl, {
+                    trigger: 'hover',
+                    placement: 'top'
+                });
+            });
+        }
+        
+        /**
+         * تحميل مكتبات الطرف الثالث عند الحاجة
+         */
+        function loadThirdPartyLibs() {
+            // تحميل Bootstrap JS عند الحاجة
+            if (typeof bootstrap === 'undefined') {
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js';
+                script.async = true;
+                document.body.appendChild(script);
+            }
+            
+            // تحميل AOS للانيميشن عند الحاجة
+            if (typeof AOS === 'undefined' && document.querySelector('[data-aos]')) {
+                const script = document.createElement('script');
+                script.src = 'https://unpkg.com/aos@2.3.1/dist/aos.js';
+                script.async = true;
+                script.onload = function() {
+                    AOS.init({
+                        duration: 800,
+                        easing: 'ease-in-out',
+                        once: true,
+                        offset: 100
+                    });
+                };
+                document.body.appendChild(script);
+                
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = 'https://unpkg.com/aos@2.3.1/dist/aos.css';
+                document.head.appendChild(link);
+            }
+        }
+        
+        /**
+         * إدارة تحميل الصور
+         */
+        function manageImageLoading() {
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const image = entry.target;
+                            image.src = image.dataset.src || image.src;
+                            imageObserver.unobserve(image);
+                        }
+                    });
+                }, {
+                    rootMargin: '200px 0px'
+                });
+                
+                images.forEach(image => {
+                    imageObserver.observe(image);
+                });
+            }
+        }
+    </script>
+    
+    <!-- Deferred JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول | منصة ProConsult</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #e6e9ff;
+            --secondary: #3f37c9;
+            --google-red: #DB4437;
+            --linkedin-blue: #0077B5;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --error: #dc3545;
+            --success: #28a745;
+            --transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f5f7ff;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 0;
+        }
+        
+        .auth-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .auth-card {
+            display: flex;
+            background-color: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            min-height: 600px;
+        }
+        
+        .auth-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .auth-image {
+            flex: 1;
+            background-image: url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: none;
+        }
+        
+        .auth-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(67, 97, 238, 0.8), rgba(63, 55, 201, 0.9));
+        }
+        
+        .auth-image-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            padding: 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .auth-form {
+            flex: 1;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo img {
+            height: 60px;
+            margin-bottom: 1rem;
+        }
+        
+        .logo h2 {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: #f8f9fa;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            outline: none;
+            background-color: white;
+        }
+        
+        .form-control.is-invalid {
+            border-color: var(--error);
+            background-image: none;
+        }
+        
+        .form-control.is-invalid:focus {
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2);
+        }
+        
+        .invalid-feedback {
+            display: none;
+            color: var(--error);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            text-align: right;
+        }
+        
+        .is-invalid ~ .invalid-feedback {
+            display: block;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .social-login {
+            margin: 2rem 0;
+        }
+        
+        .social-divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--gray);
+        }
+        
+        .social-divider::before,
+        .social-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: #e0e0e0;
+        }
+        
+        .social-divider::before {
+            margin-right: 1rem;
+        }
+        
+        .social-divider::after {
+            margin-left: 1rem;
+        }
+        
+        .social-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .social-btn i {
+            margin-left: 8px;
+            font-size: 1.2rem;
+        }
+        
+        .btn-google {
+            background-color: var(--google-red);
+        }
+        
+        .btn-linkedin {
+            background-color: var(--linkedin-blue);
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--gray);
+        }
+        
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive Design */
+        @media (min-width: 992px) {
+            .auth-image {
+                display: block;
+            }
+            
+            .auth-form {
+                padding: 4rem;
+            }
+            
+            .social-buttons {
+                flex-direction: row;
+            }
+        }
+        
+        @media (max-width: 991.98px) {
+            .auth-card {
+                flex-direction: column;
+            }
+            
+            .auth-image {
+                height: 200px;
+                display: block;
+            }
+            
+            .social-buttons {
+                flex-direction: column;
+            }
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .btn-loading .spinner {
+            display: inline-block;
+        }
+
+        /* Alert styles */
+        .alert-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 400px;
+        }
+
+        .alert {
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+        }
+
+        .alert.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Alert Container -->
+    <div class="alert-container" id="alertContainer"></div>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- الجانب الأيمن: الصورة (تظهر فقط على الشاشات الكبيرة) -->
+            <div class="auth-image">
+                <div class="auth-image-content">
+                    <h2 class="mb-4">مرحبًا بعودتك!</h2>
+                    <p class="mb-5">سجل الدخول للوصول إلى عالم من الفرص الاستثمارية المميزة والشركات الناشئة الواعدة</p>
+                    
+                    <div class="features">
+                        <div class="feature-item mb-4">
+                            <div class="d-flex align-items-center">
+                                <i class="mdi mdi-shield-check-outline me-3" style="font-size: 1.5rem;"></i>
+                                <span>بيئة آمنة ومشفرة</span>
+                            </div>
+                        </div>
+                        <div class="feature-item mb-4">
+                            <div class="d-flex align-items-center">
+                                <i class="mdi mdi-chart-line me-3" style="font-size: 1.5rem;"></i>
+                                <span>تحليلات استثمارية متقدمة</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="d-flex align-items-center">
+                                <i class="mdi mdi-handshake me-3" style="font-size: 1.5rem;"></i>
+                                <span>وساطة احترافية</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- الجانب الأيسر: نموذج تسجيل الدخول -->
+            <div class="auth-form">
+                <div class="logo">
+                    <img src="https://www2.0zz0.com/2025/05/19/00/684514557.png" alt=" " width="100" height="190">
+                </div>
+                
+                <form id="loginForm" novalidate>
+                    <div class="form-group">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" class="form-control" id="email" required placeholder="أدخل بريدك الإلكتروني">
+                        <div class="invalid-feedback">يرجى إدخال بريد إلكتروني صحيح</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">كلمة المرور</label>
+                        <input type="password" class="form-control" id="password" required placeholder="أدخل كلمة المرور">
+                        <div class="invalid-feedback">يجب أن تتكون كلمة المرور من 6 أحرف على الأقل</div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="remember">
+                            <label class="form-check-label" for="remember">تذكرني</label>
+                        </div>
+                        <a href="#" class="text-primary">نسيت كلمة المرور؟</a>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block mb-3" id="loginBtn">
+                        <span class="spinner"></span>
+                        <span class="btn-text">تسجيل الدخول</span>
+                    </button>
+                    
+                    <div class="social-login">
+                        <div class="social-divider">أو سجل الدخول باستخدام</div>
+                        
+                        <div class="social-buttons">
+                            <button type="button" class="social-btn btn-google" id="googleLogin">
+                                <i class="fab fa-google"></i>
+                                <span>Google</span>
+                            </button>
+                            
+                            <button type="button" class="social-btn btn-linkedin" id="linkedinLogin">
+                                <i class="fab fa-linkedin-in"></i>
+                                <span>LinkedIn</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="auth-footer">
+                        ليس لديك حساب؟ <a href="register.html">أنشئ حسابًا جديدًا</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            GoogleAuthProvider, 
+            signInWithPopup,
+            setPersistence,
+            browserSessionPersistence,
+            browserLocalPersistence,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { 
+            getFirestore,
+            doc,
+            getDoc
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBtV4DuhZUM1H5lz8B7jaFlSFoYindrUoM",
+            authDomain: "proconsult24-fbd28.firebaseapp.com",
+            projectId: "proconsult24-fbd28",
+            storageBucket: "proconsult24-fbd28.appspot.com",
+            messagingSenderId: "131999055005",
+            appId: "1:131999055005:web:e4e0158fcb5331c208a874",
+            measurementId: "G-TET6DRPQ3T"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        // Custom alert function
+        function showAlert(message, type = 'danger', duration = 5000) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertId = 'alert-' + Date.now();
+            
+            const alertElement = document.createElement('div');
+            alertElement.className = `alert alert-${type} alert-dismissible fade show`;
+            alertElement.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            alertElement.id = alertId;
+            
+            alertContainer.appendChild(alertElement);
+            
+            // Show alert with animation
+            setTimeout(() => {
+                alertElement.classList.add('show');
+            }, 100);
+            
+            // Remove alert after duration
+            if (duration) {
+                setTimeout(() => {
+                    alertElement.classList.remove('show');
+                    setTimeout(() => {
+                        alertElement.remove();
+                    }, 300);
+                }, duration);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const loginBtn = document.getElementById('loginBtn');
+            const btnText = document.querySelector('.btn-text');
+            const rememberMe = document.getElementById('remember');
+            
+            // Check if user is already logged in
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    // Get additional user data from Firestore
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    const userData = userDoc.data();
+                    
+                    // Save user data to sessionStorage
+                    sessionStorage.setItem('user', JSON.stringify({
+                        uid: user.uid,
+                        email: user.email,
+                        displayName: user.displayName || userData?.displayName,
+                        photoURL: user.photoURL,
+                        accountType: userData?.accountType,
+                        emailVerified: user.emailVerified
+                    }));
+                    
+                    // Redirect to home page
+                    window.location.href = 'home.html';
+                }
+            });
+
+            // دالة لعرض رسالة الخطأ
+            function showError(input, message) {
+                input.classList.add('is-invalid');
+                const errorElement = input.nextElementSibling;
+                if (errorElement && errorElement.classList.contains('invalid-feedback')) {
+                    errorElement.textContent = message;
+                }
+            }
+            
+            // دالة لإزالة رسالة الخطأ
+            function removeError(input) {
+                input.classList.remove('is-invalid');
+                const errorElement = input.nextElementSibling;
+                if (errorElement && errorElement.classList.contains('invalid-feedback')) {
+                    errorElement.textContent = '';
+                }
+            }
+            
+            // التحقق من صحة البريد الإلكتروني
+            function validateEmail() {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email.value.trim()) {
+                    showError(email, 'يجب إدخال البريد الإلكتروني');
+                    return false;
+                } else if (!emailRegex.test(email.value)) {
+                    showError(email, 'البريد الإلكتروني غير صحيح');
+                    return false;
+                } else {
+                    removeError(email);
+                    return true;
+                }
+            }
+            
+            // التحقق من صحة كلمة المرور
+            function validatePassword() {
+                if (!password.value.trim()) {
+                    showError(password, 'يجب إدخال كلمة المرور');
+                    return false;
+                } else if (password.value.length < 6) {
+                    showError(password, 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل');
+                    return false;
+                } else {
+                    removeError(password);
+                    return true;
+                }
+            }
+            
+            // أحداث التحقق أثناء الكتابة
+            email.addEventListener('input', validateEmail);
+            password.addEventListener('input', validatePassword);
+            
+            // عند إرسال النموذج
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // التحقق من الصحة
+                const isEmailValid = validateEmail();
+                const isPasswordValid = validatePassword();
+                
+                if (isEmailValid && isPasswordValid) {
+                    try {
+                        // عرض حالة التحميل
+                        loginBtn.classList.add('btn-loading');
+                        btnText.textContent = 'جاري تسجيل الدخول...';
+                        
+                        // Set persistence based on "Remember me" selection
+                        const persistence = rememberMe.checked ? 
+                            browserLocalPersistence : browserSessionPersistence;
+                        
+                        await setPersistence(auth, persistence);
+                        
+                        // تسجيل الدخول باستخدام Firebase
+                        const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value);
+                        const user = userCredential.user;
+                        
+                        // Get additional user data from Firestore
+                        const userDoc = await getDoc(doc(db, "users", user.uid));
+                        const userData = userDoc.data();
+                        
+                        // Check if email is verified
+                        if (!user.emailVerified) {
+                            showAlert('يرجى التحقق من بريدك الإلكتروني أولاً', 'warning');
+                            return;
+                        }
+                        
+                        // Save user data to sessionStorage
+                        sessionStorage.setItem('user', JSON.stringify({
+                            uid: user.uid,
+                            email: user.email,
+                            displayName: user.displayName || userData?.displayName,
+                            photoURL: user.photoURL,
+                            accountType: userData?.accountType,
+                            emailVerified: user.emailVerified
+                        }));
+                        
+                        // توجيه المستخدم إلى الصفحة الرئيسية
+                        window.location.href = 'home.html';
+                        
+                    } catch (error) {
+                        console.error('Login error:', error);
+                        
+                        // إخفاء حالة التحميل
+                        loginBtn.classList.remove('btn-loading');
+                        btnText.textContent = 'تسجيل الدخول';
+                        
+                        // عرض رسالة الخطأ المناسبة
+                        let errorMessage;
+                        switch (error.code) {
+                            case 'auth/invalid-email':
+                                errorMessage = 'البريد الإلكتروني غير صحيح';
+                                showError(email, errorMessage);
+                                break;
+                            case 'auth/user-disabled':
+                                errorMessage = 'هذا الحساب معطل';
+                                break;
+                            case 'auth/user-not-found':
+                                errorMessage = 'لا يوجد حساب مرتبط بهذا البريد الإلكتروني';
+                                showError(email, errorMessage);
+                                break;
+                            case 'auth/wrong-password':
+                                errorMessage = 'كلمة المرور غير صحيحة';
+                                showError(password, errorMessage);
+                                break;
+                            case 'auth/too-many-requests':
+                                errorMessage = 'تم تجاوز عدد المحاولات المسموح بها. يرجى المحاولة لاحقاً';
+                                break;
+                            default:
+                                errorMessage = 'حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى لاحقًا';
+                        }
+                        
+                        showAlert(errorMessage);
+                    }
+                } else {
+                    // التمرير إلى أول حقل به خطأ
+                    const firstError = document.querySelector('.is-invalid');
+                    if (firstError) {
+                        firstError.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                        firstError.focus();
+                    }
+                }
+            });
+            
+            // تسجيل الدخول عبر Google
+            document.getElementById('googleLogin').addEventListener('click', async function() {
+                try {
+                    const result = await signInWithPopup(auth, provider);
+                    const user = result.user;
+                    
+                    // Get additional user data from Firestore
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    const userData = userDoc.data();
+                    
+                    // Save user data to sessionStorage
+                    sessionStorage.setItem('user', JSON.stringify({
+                        uid: user.uid,
+                        email: user.email,
+                        displayName: user.displayName || userData?.displayName,
+                        photoURL: user.photoURL,
+                        accountType: userData?.accountType,
+                        emailVerified: user.emailVerified
+                    }));
+                    
+                    // توجيه المستخدم إلى الصفحة الرئيسية
+                    window.location.href = 'home.html';
+                    
+                } catch (error) {
+                    console.error('Google sign-in error:', error);
+                    
+                    let errorMessage = 'حدث خطأ أثناء تسجيل الدخول عبر Google';
+                    if (error.code === 'auth/account-exists-with-different-credential') {
+                        errorMessage = 'هذا البريد الإلكتروني مسجل بالفعل بطريقة أخرى';
+                    }
+                    
+                    showAlert(errorMessage);
+                }
+            });
+            
+            // تسجيل الدخول عبر LinkedIn
+            document.getElementById('linkedinLogin').addEventListener('click', function() {
+                showAlert('تسجيل الدخول عبر LinkedIn غير متاح حالياً', 'info');
+            });
+        });
+    </script>
+</body>
+</html>

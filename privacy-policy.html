@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سياسة الخصوصية - ProConsult</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #e6e9ff;
+            --primary-dark: #3a0ca3;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+            
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f5f7ff;
+            color: #333;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        .privacy-hero {
+            background: var(--gradient);
+            color: white;
+            padding: 6rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .privacy-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
+            opacity: 0.15;
+            z-index: 0;
+        }
+        
+        .privacy-hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .privacy-hero h1 {
+            font-size: 2.75rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .privacy-hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+        
+        .breadcrumb a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        
+        .breadcrumb span {
+            margin: 0 0.5rem;
+            opacity: 0.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+        
+        .privacy-content {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .section-subtitle {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            margin: 2rem 0 1rem;
+        }
+        
+        .privacy-content p {
+            margin-bottom: 1.25rem;
+            color: #555;
+        }
+        
+        .privacy-content ul, .privacy-content ol {
+            margin-bottom: 1.5rem;
+            padding-right: 1.5rem;
+            color: #555;
+        }
+        
+        .privacy-content li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .highlight-box {
+            background: var(--primary-light);
+            border-right: 4px solid var(--primary);
+            border-radius: var(--radius-sm);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .highlight-box p {
+            margin-bottom: 0;
+            color: var(--primary-dark);
+            font-weight: 500;
+        }
+        
+        .contact-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: 2rem;
+            text-align: center;
+            border-top: 3px solid var(--primary);
+            transition: var(--transition);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .contact-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        .contact-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-btn {
+            display: inline-block;
+            padding: 0.9rem 2rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.25);
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(67, 97, 238, 0.3);
+        }
+        
+        .last-updated {
+            text-align: center;
+            color: #777;
+            font-size: 0.95rem;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 992px) {
+            .privacy-hero {
+                padding: 5rem 1.5rem;
+            }
+            
+            .privacy-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .privacy-content {
+                padding: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .privacy-hero {
+                padding: 4rem 1rem;
+            }
+            
+            .privacy-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .privacy-hero p {
+                font-size: 1.1rem;
+            }
+            
+            .container {
+                padding: 2rem 1rem;
+            }
+            
+            .privacy-content {
+                padding: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.7rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1.25rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .privacy-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .breadcrumb {
+                flex-wrap: wrap;
+            }
+            
+            .contact-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- قسم البطل -->
+    <section class="privacy-hero animate__animated animate__fadeIn">
+        <div class="privacy-hero-content">
+            <h1 class="animate__animated animate__fadeInDown">سياسة الخصوصية</h1>
+            <p class="animate__animated animate__fadeInDown animate__delay-1s">نحن في ProConsult نحمي خصوصيتك ونعتبرها أولوية قصوى</p>
+            
+            <div class="breadcrumb animate__animated animate__fadeInUp animate__delay-2s">
+                <a href="#">الرئيسية</a>
+                <span>/</span>
+                <a href="#">سياسة الخصوصية</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <div class="privacy-content animate__animated animate__fadeInUp">
+            <h2 class="section-title">بيان الخصوصية</h2>
+            <p>نرحب بكم في موقع ProConsult. نحن ندرك أهمية الخصوصية ونلتزم بحماية البيانات الشخصية للمستخدمين وفقًا لأحكام نظام حماية البيانات الشخصية ولائحته التنفيذية. توضح هذه السياسة كيفية جمعنا واستخدامنا وحماية معلوماتكم الشخصية.</p>
+            
+            <div class="highlight-box">
+                <p>آخر تحديث: ١ يناير ٢٠٢٣. قد نقوم بتحديث هذه السياسة من وقت لآخر، وسننشر أي تغييرات على هذه الصفحة.</p>
+            </div>
+            
+            <h3 class="section-subtitle">١. المعلومات التي نجمعها</h3>
+            <p>قد نجمع الأنواع التالية من المعلومات:</p>
+            <ul>
+                <li>المعلومات الشخصية (الاسم، البريد الإلكتروني، رقم الهاتف)</li>
+                <li>معلومات الدفع عند إتمام المعاملات</li>
+                <li>بيانات الاستخدام وزيارات الموقع</li>
+                <li>عنوان IP ومعلومات المتصفح والأجهزة</li>
+                <li>أي معلومات أخرى تقدمها لنا طواعية</li>
+            </ul>
+            
+            <h3 class="section-subtitle">٢. كيفية استخدام المعلومات</h3>
+            <p>نستخدم المعلومات التي نجمعها للأغراض التالية:</p>
+            <ol>
+                <li>تقديم الخدمات وتحسين تجربة المستخدم</li>
+                <li>معالجة المعاملات والدفعات</li>
+                <li>الرد على الاستفسارات وطلبات الدعم</li>
+                <li>إرسال التحديثات والعروض الترويجية (بموافقتك)</li>
+                <li>تحليل استخدام الموقع وتحسين أدائه</li>
+                <li>الامتثال للالتزامات القانونية</li>
+            </ol>
+            
+            <h3 class="section-subtitle">٣. مشاركة المعلومات</h3>
+            <p>لا نبيع أو نؤجر المعلومات الشخصية لأطراف ثالثة. قد نشارك المعلومات مع:</p>
+            <ul>
+                <li>مقدمي الخدمات الذين يعملون نيابة عنا</li>
+                <li>الجهات الحكومية عند الالتزام القانوني</li>
+                <li>في حالات الاندماج أو الاستحواذ على الشركة</li>
+            </ul>
+            <p>نتخذ جميع الإجراءات المعقولة لضمان تعامل هذه الأطراف مع بياناتك بشكل آمن وسري.</p>
+            
+            <h3 class="section-subtitle">٤. حماية البيانات</h3>
+            <p>نحن نستخدم تدابير أمنية فنية وإدارية متقدمة لحماية معلوماتك، بما في ذلك:</p>
+            <ul>
+                <li>التشفير أثناء نقل البيانات</li>
+                <li>جدران الحماية وأنظمة الكشف عن التسلل</li>
+                <li>الوصول المحدود للموظفين المصرح لهم</li>
+                <li>مراجعات أمنية دورية</li>
+            </ul>
+            
+            <h3 class="section-subtitle">٥. حقوقك</h3>
+            <p>لديك الحق في:</p>
+            <ul>
+                <li>الوصول إلى معلوماتك الشخصية</li>
+                <li>طلب تصحيح المعلومات غير الدقيقة</li>
+                <li>طلب حذف بياناتك في حالات معينة</li>
+                <li>طلب تقييد معالجة بياناتك</li>
+                <li>سحب الموافقة على استخدام بياناتك</li>
+                <li>تقديم شكوى للجهات التنظيمية</li>
+            </ul>
+            
+            <h3 class="section-subtitle">٦. ملفات تعريف الارتباط (الكوكيز)</h3>
+            <p>نستخدم ملفات تعريف الاركرة لتحسين تجربة المستخدم. يمكنك إدارة تفضيلات ملفات تعريف الارتباط من خلال إعدادات المتصفح.</p>
+            
+            <h3 class="section-subtitle">٧. روابط لمواقع خارجية</h3>
+            <p>قد يحتوي موقعنا على روابط لمواقع خارجية. نحن لسنا مسؤولين عن ممارسات الخصوصية لهذه المواقع.</p>
+            
+            <h3 class="section-subtitle">٨. الأطفال</h3>
+            <p>لا نجمع معلومات عن الأطفال دون سن ١٣ عامًا عن قصد. إذا اكتشفنا أننا جمعنا معلومات عن طفل دون هذا السن، سنتخذ الخطوات اللازمة لحذف هذه المعلومات.</p>
+            
+            <h3 class="section-subtitle">٩. التغييرات على السياسة</h3>
+            <p>سننشر أي تغييرات على سياسة الخصوصية هذه على هذه الصفحة. ننصحك بمراجعة هذه السياسة بشكل دوري.</p>
+            
+            <div class="highlight-box">
+                <p>باستخدامك لموقعنا وخدماتنا، فإنك توافق على شروط سياسة الخصوصية هذه.</p>
+            </div>
+        </div>
+        
+        <!-- بطاقة التواصل -->
+        <div class="contact-card animate__animated animate__fadeInUp animate__delay-1s">
+            <i class="fas fa-headset"></i>
+            <h3>لديك أسئلة حول سياسة الخصوصية؟</h3>
+            <p>فريق حماية البيانات لدينا مستعد للإجابة على جميع استفساراتك</p>
+            <a href="mailto:privacy@ProConsult.com" class="contact-btn">تواصل معنا</a>
+        </div>
+        
+        <p class="last-updated animate__animated animate__fadeIn animate__delay-2s">آخر تحديث: ١ يناير ٢٠٢٣</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // تأثيرات الظهور عند التمرير
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.animate__animated');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementPosition < windowHeight - 100) {
+                        const animationClass = element.getAttribute('class').split('animate__animated ')[1];
+                        element.classList.add(animationClass);
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // تشغيل مرة أولى عند التحميل
+        });
+    </script>
+</body>
+</html>
